@@ -4,8 +4,6 @@ import Decimal from 'decimal.js';
 Decimal.set({ precision: 1e9 });
 Decimal.set({ toExpPos: 9e15 });
 
-const base62 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
 // 正規表現にマッチするか判定する
 const matchRegExp = (value, regExp) => {
   if (!(regExp instanceof RegExp)) {
@@ -30,52 +28,38 @@ const isDecimalString = value => {
 };
 
 // 10進数の文字列を他進数に変換する
-const convertFromDecimal = (originalNumber, base, baseNumbers) => {
-  // integerだと最大長が短いため、originalNumberとbaseはstringに限定
+const convertFromDecimal = (originalNumber, baseNumbers) => {
+  // integerだと最大長が短いため、originalNumberはstringに限定する
   if (typeof originalNumber !== 'string') {
-    throw new TypeError('First augument must be a string.');
-  }
-  if (typeof base !== 'string') {
-    throw new TypeError('Second augument must be a string.');
+    throw new Error('First augument must be a string.');
   }
 
-  // originalNumberとbaseは正の10進数に限定
+  // originalNumberは正の10進数に限定する
   if (!isDecimalString(originalNumber)) {
-    throw new TypeError('First augument must be a decimal.');
-  }
-  if (!isDecimalString(base)) {
-    throw new TypeError('Second augument must be a decimal.');
+    throw new Error('First augument must be a decimal.');
   }
 
-  // baseは1より大きい(2以上の)値でなければならない
-  const decimalBase = new Decimal(base);
-  const isLargerThan1 = decimalBase.comparedTo(new Decimal(1)) === 1;
-  if (!isLargerThan1) {
-    throw new RangeError('Second augument must be larger than 1.');
-  }
-
-  // baseNumbersはstringに限定するが、引数が渡されていない場合はデフォルト値を設定
-  baseNumbers = typeof baseNumbers !== 'undefined' ? baseNumbers : base62;
+  // baseNumbersはstringに限定する
   if (typeof baseNumbers !== 'string') {
-    throw new TypeError('Third augument must be a string.');
+    throw new Error('Second augument must be a string.');
   }
 
   // baseNumbersは同じ文字を含んではいけない
   if (baseNumbers.length !== new Set(baseNumbers).size) {
-    throw new Error('Third augument must not contain the same characters.');
+    throw new Error('Second augument must not contain the same characters.');
   }
 
-  // baseはbaseNumbersの文字種類数よりも小さい値でなければならない
-  const baseNumbersSize = new Decimal(baseNumbers.length);
-  if (decimalBase.comparedTo(baseNumbersSize) === 1) {
-    throw new RangeError(
-      'Second augument must be lower than the length of baseNumbers.'
-    );
+  // baseNumbersの長さは2以上でなければならない(1進数は定義できないため)
+  const decimalBase = new Decimal(baseNumbers.length);
+  const isLargerThan1 = decimalBase.comparedTo(new Decimal(1)) === 1;
+  if (!isLargerThan1) {
+    throw new Error("Second augument' length must be larger than 1.");
   }
 
-  const convertedNumbers = []; // 変換後の文字列を一文字ずつ区切った配列
+  // 変換後の文字列を一文字ずつ区切って格納する配列
+  const convertedNumbers = [];
 
-  // 変換前の文字列が0だった場合、convertedNumbersが空配列にならないように0を追加
+  // 変換前の文字列が0だった場合、convertedNumbersが空配列にならないように0を追加する
   let decimalOriginalNumber = new Decimal(originalNumber);
   if (decimalOriginalNumber.isZero()) {
     convertedNumbers.unshift('0');
@@ -96,57 +80,36 @@ const convertFromDecimal = (originalNumber, base, baseNumbers) => {
 };
 
 // 他進数の文字列を10進数に変換する
-const convertToDecimal = (originalNumber, base, baseNumbers) => {
-  // originalNumberとbaseはstringに限定
+const convertToDecimal = (originalNumber, baseNumbers) => {
+  // originalNumberはstringに限定する
   if (typeof originalNumber !== 'string') {
-    throw new TypeError('First augument must be a string.');
-  }
-  if (typeof base !== 'string') {
-    throw new TypeError('Second augument must be a string.');
+    throw new Error('First augument must be a string.');
   }
 
-  // baseは10進数に限定
-  if (!isDecimalString(base)) {
-    throw new TypeError('Second augument must be a decimal.');
-  }
-
-  // baseは1より大きい(2以上の)値でなければならない
-  const decimalBase = new Decimal(base);
-  const isLargerThan1 = decimalBase.comparedTo(new Decimal(1)) === 1;
-  if (!isLargerThan1) {
-    throw new RangeError('Second augument must be larger than 1.');
-  }
-
-  // baseNumbersはstringに限定するが、引数が渡されていない場合はデフォルト値を設定
-  baseNumbers = typeof baseNumbers !== 'undefined' ? baseNumbers : base62;
+  // baseNumbersはstringに限定する
   if (typeof baseNumbers !== 'string') {
-    throw new TypeError('Third augument must be a string.');
+    throw new Error('Second augument must be a string.');
   }
 
   // baseNumbersは同じ文字を含んではいけない
   if (baseNumbers.length !== new Set(baseNumbers).size) {
-    throw new Error('Third augument must not contain the same characters.');
+    throw new Error('Second augument must not contain the same characters.');
   }
 
-  // baseはbaseNumbersの文字種類数よりも小さい値でなければならない
-  const baseNumbersSize = new Decimal(baseNumbers.length);
-  if (decimalBase.comparedTo(baseNumbersSize) === 1) {
-    throw new RangeError(
-      'Second augument must be lower than the length of baseNumbers.'
-    );
+  // baseNumbersの長さは2以上でなければならない(1進数は定義できないため)
+  const decimalBase = new Decimal(baseNumbers.length);
+  const isLargerThan1 = decimalBase.comparedTo(new Decimal(1)) === 1;
+  if (!isLargerThan1) {
+    throw new Error("Second augument' length must be larger than 1.");
   }
-
-  // 進数baseに合わせて進数文字列baseNumbersを調整する
-  // この処理がないと、例えば9が2進数として認識されてしまい、次の処理が想定通り動作しない
-  baseNumbers = baseNumbers.substr(0, decimalBase.toNumber());
 
   // originalNumberはbaseNumbersのみで構成されている必要がある
   const availableCharacters = new RegExp('^[' + baseNumbers + ']+$');
   if (!matchRegExp(originalNumber, availableCharacters)) {
-    throw new Error('First augument must consist of baseNumbers.');
+    throw new Error('First augument must consist of second augument.');
   }
 
-  // 進数文字列をインデックスに変換する連想配列を作成
+  // 進数文字列をインデックスに変換する連想配列を作成する
   const baseNumbers2Index = {};
   for (let i = 0; i < baseNumbers.length; i++) {
     baseNumbers2Index[baseNumbers.substr(i, 1)] = new Decimal(i);
@@ -157,7 +120,7 @@ const convertToDecimal = (originalNumber, base, baseNumbers) => {
   for (let i = 0; i < originalNumber.length; i++) {
     const tmpDecimal1 =
       baseNumbers2Index[originalNumber.substr((i + 1) * -1, 1)];
-    const tmpDecimal2 = Decimal.pow(base, i);
+    const tmpDecimal2 = Decimal.pow(decimalBase, i);
     const tmpDecimal3 = tmpDecimal1.times(tmpDecimal2);
     convertedNumber = convertedNumber.plus(tmpDecimal3);
   }
@@ -167,29 +130,50 @@ const convertToDecimal = (originalNumber, base, baseNumbers) => {
 
 const convertBase = (
   originalNumber,
-  originalBase,
-  convertedBase,
-  baseNumbers
+  originalBaseNumbers,
+  convertedBaseNumbers
 ) => {
   // 変換処理
-  // 例外が発生した場合は、エラーメッセージを変換する
-  let tmpNumber;
+  const tmpNumber = convertToDecimal(originalNumber, originalBaseNumbers);
   try {
-    tmpNumber = convertToDecimal(originalNumber, originalBase, baseNumbers);
+    const convertedNumber = convertFromDecimal(tmpNumber, convertedBaseNumbers);
+    return convertedNumber.toString();
   } catch (e) {
-    if (matchRegExp(e.message, /Third/)) {
-      throw new Error(e.message.replace('Third', 'Fourth'));
+    if (matchRegExp(e.message, /Second/)) {
+      throw new Error(e.message.replace('Second', 'Third'));
     } else {
       throw new Error(e.message);
     }
   }
+};
 
+const convertBaseSimply = (originalNumber, originalBase, convertedBase) => {
+  // originalBaseとconvertedBaseはintegerに限定する
+  if (typeof originalBase !== 'number') {
+    throw new TypeError('Second augument must be a number.');
+  }
+  if (typeof convertedBase !== 'number') {
+    throw new TypeError('Third augument must be a number.');
+  }
+
+  // originalBaseとconvertedBaseは2から62に限定する
+  if (!(2 <= originalBase && originalBase <= 62)) {
+    throw new RangeError('Second augument must be between 2 and 62.');
+  }
+  if (!(2 <= convertedBase && convertedBase <= 62)) {
+    throw new RangeError('Third augument must be between 2 and 62.');
+  }
+
+  // 引数の進数から変換に用いる進数文字列を生成する
+  const base62 =
+    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const originalBaseNumbers = base62.substr(0, originalBase);
+  const convertedBaseNumbers = base62.substr(0, convertedBase);
+
+  // 変換処理
+  const tmpNumber = convertToDecimal(originalNumber, originalBaseNumbers);
   try {
-    const convertedNumber = convertFromDecimal(
-      tmpNumber,
-      convertedBase,
-      baseNumbers
-    );
+    const convertedNumber = convertFromDecimal(tmpNumber, convertedBaseNumbers);
     return convertedNumber.toString();
   } catch (e) {
     if (matchRegExp(e.message, /Second/)) {
@@ -205,5 +189,6 @@ export {
   isDecimalString,
   convertFromDecimal,
   convertToDecimal,
-  convertBase
+  convertBase,
+  convertBaseSimply
 };
