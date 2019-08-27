@@ -7,8 +7,14 @@ import {
   isDecimalString,
   convertFromDecimal,
   convertToDecimal,
-  convertBase
+  convertBase,
+  convertBaseSimply
 } from '../src/js/baseConverter';
+
+const base10 = '0123456789';
+const base16 = '0123456789abcdef';
+const base32 = '0123456789abcdefghijklmnopqrstuv';
+const base62 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 describe('test baseConverter', () => {
   it('test matchRegExp()', () => {
@@ -64,238 +70,411 @@ describe('test baseConverter', () => {
 
   it('test convertFromDecimal()', () => {
     // 適切な例外を投げているか
-    // integerだと最大長が短いため、originalNumberとbaseはstringに限定
+    // integerだと最大長が短いため、originalNumberはstringに限定する
     assert.throws(() => {
-      convertFromDecimal();
-    }, TypeError);
+      convertFromDecimal(null, base62);
+    }, Error);
     assert.throws(() => {
-      convertFromDecimal(100);
-    }, TypeError);
+      convertFromDecimal(undefined, base62);
+    }, Error);
     assert.throws(() => {
-      convertFromDecimal('100');
-    }, TypeError);
+      convertFromDecimal(NaN, base62);
+    }, Error);
     assert.throws(() => {
-      convertFromDecimal('100', 2);
-    }, TypeError);
-    // originalNumberとbaseは正の10進数に限定
+      convertFromDecimal(Infinity, base62);
+    }, Error);
     assert.throws(() => {
-      convertFromDecimal('', '2');
-    }, TypeError);
-    assert.throws(() => {
-      convertFromDecimal('test', '2');
-    }, TypeError);
-    assert.throws(() => {
-      convertFromDecimal('100', '');
-    }, TypeError);
-    assert.throws(() => {
-      convertFromDecimal('100', 'test');
-    }, TypeError);
-    // baseは1より大きい(2以上の)値でなければならない
-    assert.throws(() => {
-      convertFromDecimal('100', '0');
-    }, RangeError);
-    assert.throws(() => {
-      convertFromDecimal('100', '1');
-    }, RangeError);
+      convertFromDecimal(100, base62);
+    }, Error);
     assert.doesNotThrow(() => {
-      convertFromDecimal('100', '2');
-    }, RangeError);
-    // baseNumbersはstringに限定するが、引数が渡されていない場合はデフォルト値を設定
+      convertFromDecimal('100', base62);
+    }, Error);
+
+    // originalNumberは正の10進数に限定する
     assert.throws(() => {
-      convertFromDecimal('100', '2', 0);
-    }, TypeError);
+      convertFromDecimal('', base62);
+    }, Error);
+    assert.throws(() => {
+      convertFromDecimal('test', base62);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertFromDecimal('100', base62);
+    }, Error);
+
+    // baseNumbersはstringに限定する
+    assert.throws(() => {
+      convertFromDecimal('100', null);
+    }, Error);
+    assert.throws(() => {
+      convertFromDecimal('100', 123456789);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertFromDecimal('100', '123456789');
+    }, Error);
+
     // baseNumbersは同じ文字を含んではいけない
     assert.throws(() => {
-      convertFromDecimal('100', '2', 'test');
+      convertFromDecimal('100', '1234567899');
     }, Error);
-    // baseはbaseNumbersの文字種類数よりも小さい値でなければならない
     assert.doesNotThrow(() => {
-      convertFromDecimal('100', '62');
-    }, RangeError);
+      convertFromDecimal('100', '1234567890');
+    }, Error);
+
+    // baseNumbersの長さは2以上でなければならない(1進数は定義できないため)
     assert.throws(() => {
-      convertFromDecimal('100', '63');
-    }, RangeError);
+      convertFromDecimal('100', '');
+    }, Error);
+    assert.throws(() => {
+      convertFromDecimal('100', '0');
+    }, Error);
     assert.doesNotThrow(() => {
-      const base63 =
-        '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!';
-      convertFromDecimal('100', '63', base63);
-    }, RangeError);
-    assert.throws(() => {
-      const base16 = '0123456789abcdef';
-      convertFromDecimal('100', '62', base16);
-    }, RangeError);
+      convertFromDecimal('100', '01');
+    }, Error);
 
     // 適切な値を返しているか
-    assert.strictEqual(convertFromDecimal('0', '2'), '0');
-    assert.strictEqual(convertFromDecimal('1', '2'), '1');
-    assert.strictEqual(convertFromDecimal('2', '2'), '10');
-    assert.strictEqual(convertFromDecimal('4', '2'), '100');
-    assert.strictEqual(convertFromDecimal('10', '2'), '1010');
-    assert.strictEqual(convertFromDecimal('100', '2'), '1100100');
-    assert.strictEqual(convertFromDecimal('00100', '2'), '1100100');
-    assert.strictEqual(convertFromDecimal('100', '002'), '1100100');
-    assert.strictEqual(convertFromDecimal('00100', '002'), '1100100');
-    assert.strictEqual(convertFromDecimal('100', '16'), '64');
-    assert.strictEqual(convertFromDecimal('100', '62'), '1C');
-    assert.strictEqual(
-      convertFromDecimal('100', '2', '0123456789abcdef'),
-      '1100100'
-    );
-    assert.strictEqual(
-      convertFromDecimal('100', '16', '0123456789abcdef'),
-      '64'
-    );
+    assert.strictEqual(convertFromDecimal('0', '01'), '0');
+    assert.strictEqual(convertFromDecimal('1', '01'), '1');
+    assert.strictEqual(convertFromDecimal('2', '01'), '10');
+    assert.strictEqual(convertFromDecimal('4', '01'), '100');
+    assert.strictEqual(convertFromDecimal('10', '01'), '1010');
+    assert.strictEqual(convertFromDecimal('100', '01'), '1100100');
+    assert.strictEqual(convertFromDecimal('00100', '01'), '1100100');
+    assert.strictEqual(convertFromDecimal('100', base16), '64');
+    assert.strictEqual(convertFromDecimal('100', base62), '1C');
     const bigNumber = '9999999999'.repeat(10);
-    assert.strictEqual(convertFromDecimal(bigNumber, '10'), bigNumber);
+    assert.strictEqual(convertFromDecimal(bigNumber, base10), bigNumber);
   });
 
   it('test convertToDecimal()', () => {
     // 適切な例外を投げているか
-    // originalNumberとbaseはstringに限定
+    // originalNumberはstringに限定する
     assert.throws(() => {
-      convertToDecimal();
-    }, TypeError);
+      convertFromDecimal(null, base62);
+    }, Error);
     assert.throws(() => {
-      convertToDecimal(100);
-    }, TypeError);
+      convertFromDecimal(undefined, base62);
+    }, Error);
     assert.throws(() => {
-      convertToDecimal('100');
-    }, TypeError);
+      convertFromDecimal(NaN, base62);
+    }, Error);
     assert.throws(() => {
-      convertToDecimal('100', 2);
-    }, TypeError);
-    // baseは正の10進数に限定
+      convertFromDecimal(Infinity, base62);
+    }, Error);
     assert.throws(() => {
-      convertToDecimal('100', '');
-    }, TypeError);
-    assert.throws(() => {
-      convertToDecimal('100', 'test');
-    }, TypeError);
-    // baseは1より大きい(2以上の)値でなければならない
-    assert.throws(() => {
-      convertToDecimal('100', '0');
-    }, RangeError);
-    assert.throws(() => {
-      convertToDecimal('100', '1');
-    }, RangeError);
+      convertFromDecimal(100, base62);
+    }, Error);
     assert.doesNotThrow(() => {
-      convertToDecimal('100', '2');
-    }, RangeError);
-    // baseNumbersはstringに限定するが、引数が渡されていない場合はデフォルト値を設定
+      convertFromDecimal('100', base62);
+    }, Error);
+
+    // baseNumbersはstringに限定する
     assert.throws(() => {
-      convertToDecimal('100', '2', 0);
-    }, TypeError);
+      convertFromDecimal('100', null);
+    }, Error);
+    assert.throws(() => {
+      convertFromDecimal('100', 123456789);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertFromDecimal('100', '123456789');
+    }, Error);
+
     // baseNumbersは同じ文字を含んではいけない
     assert.throws(() => {
-      convertToDecimal('100', '2', 'test');
+      convertFromDecimal('100', '1234567899');
     }, Error);
-    // baseはbaseNumbersの文字種類数よりも小さい値でなければならない
     assert.doesNotThrow(() => {
-      convertToDecimal('100', '62');
-    }, RangeError);
+      convertFromDecimal('100', '1234567890');
+    }, Error);
+
+    // baseNumbersの長さは2以上でなければならない(1進数は定義できないため)
     assert.throws(() => {
-      convertToDecimal('100', '63');
-    }, RangeError);
+      convertFromDecimal('100', '');
+    }, Error);
+    assert.throws(() => {
+      convertFromDecimal('100', '0');
+    }, Error);
     assert.doesNotThrow(() => {
-      const base63 =
-        '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!';
-      convertToDecimal('100', '63', base63);
-    }, RangeError);
-    assert.throws(() => {
-      const base16 = '0123456789abcdef';
-      convertToDecimal('100', '62', base16);
-    }, RangeError);
+      convertFromDecimal('100', '01');
+    }, Error);
+
     // originalNumberはbaseNumbersのみで構成されている必要がある
     assert.throws(() => {
-      convertToDecimal('', '62');
+      convertToDecimal('', base62);
     }, Error);
     assert.throws(() => {
-      convertToDecimal('test!', '62');
+      convertToDecimal('test', base16);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertToDecimal('test', base62);
     }, Error);
     assert.throws(() => {
-      convertToDecimal('test', '16');
+      convertToDecimal('test!', base62);
     }, Error);
     assert.doesNotThrow(() => {
       const base63 =
         '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!';
-      convertToDecimal('test!', '63', base63);
+      convertToDecimal('test!', base63);
     }, Error);
 
     // 適切な値を返しているか
-    assert.strictEqual(convertToDecimal('0', '2'), '0');
-    assert.strictEqual(convertToDecimal('1', '2'), '1');
-    assert.strictEqual(convertToDecimal('10', '2'), '2');
-    assert.strictEqual(convertToDecimal('100', '2'), '4');
-    assert.strictEqual(convertToDecimal('00100', '2'), '4');
-    assert.strictEqual(convertToDecimal('100', '002'), '4');
-    assert.strictEqual(convertToDecimal('00100', '002'), '4');
-    assert.strictEqual(convertToDecimal('100', '3'), '9');
-    assert.strictEqual(convertToDecimal('100', '4'), '16');
-    assert.strictEqual(convertToDecimal('100', '16'), '256');
-    assert.strictEqual(convertToDecimal('100', '32'), '1024');
-    assert.strictEqual(convertToDecimal('100', '62'), '3844');
-    assert.strictEqual(convertToDecimal('100', '2', '0123456789abcdef'), '4');
-    assert.strictEqual(convertToDecimal('100', '3', '0123456789abcdef'), '9');
-    assert.strictEqual(convertToDecimal('100', '4', '0123456789abcdef'), '16');
-    assert.strictEqual(
-      convertToDecimal('100', '16', '0123456789abcdef'),
-      '256'
-    );
+    assert.strictEqual(convertToDecimal('0', '01'), '0');
+    assert.strictEqual(convertToDecimal('1', '01'), '1');
+    assert.strictEqual(convertToDecimal('10', '01'), '2');
+    assert.strictEqual(convertToDecimal('100', '01'), '4');
+    assert.strictEqual(convertToDecimal('00100', '01'), '4');
+    assert.strictEqual(convertToDecimal('100', '012'), '9');
+    assert.strictEqual(convertToDecimal('100', '0123'), '16');
+    assert.strictEqual(convertToDecimal('100', base16), '256');
+    assert.strictEqual(convertToDecimal('100', base32), '1024');
+    assert.strictEqual(convertToDecimal('100', base62), '3844');
     const bigNumber = '9999999999'.repeat(10);
-    assert.strictEqual(convertToDecimal(bigNumber, '10'), bigNumber);
+    assert.strictEqual(convertToDecimal(bigNumber, base10), bigNumber);
   });
 
-  it('test convertFromDecimal() and convertToDecimal()', () => {
+  it('test convert big numbers', () => {
+    // 大きな数を変換できるか
     const bigNumber = '9999999999'.repeat(10);
     assert.strictEqual(
-      convertToDecimal(convertFromDecimal(bigNumber, '2'), '2'),
+      convertToDecimal(convertFromDecimal(bigNumber, '01'), '01'),
       bigNumber
     );
     assert.strictEqual(
-      convertToDecimal(convertFromDecimal(bigNumber, '3'), '3'),
+      convertToDecimal(convertFromDecimal(bigNumber, '012'), '012'),
       bigNumber
     );
     assert.strictEqual(
-      convertToDecimal(convertFromDecimal(bigNumber, '4'), '4'),
+      convertToDecimal(convertFromDecimal(bigNumber, '0123'), '0123'),
       bigNumber
     );
     assert.strictEqual(
-      convertToDecimal(convertFromDecimal(bigNumber, '16'), '16'),
+      convertToDecimal(convertFromDecimal(bigNumber, base16), base16),
       bigNumber
     );
     assert.strictEqual(
-      convertToDecimal(convertFromDecimal(bigNumber, '32'), '32'),
+      convertToDecimal(convertFromDecimal(bigNumber, base32), base32),
       bigNumber
     );
     assert.strictEqual(
-      convertToDecimal(convertFromDecimal(bigNumber, '62'), '62'),
+      convertToDecimal(convertFromDecimal(bigNumber, base62), base62),
       bigNumber
     );
   });
 
   it('test convertBase()', () => {
-    assert.strictEqual(convertBase('100', '10', '2'), '1100100');
-    assert.strictEqual(convertBase('100', '10', '3'), '10201');
-    assert.strictEqual(convertBase('100', '10', '4'), '1210');
-    assert.strictEqual(convertBase('100', '10', '16'), '64');
-    assert.strictEqual(convertBase('100', '10', '32'), '34');
-    assert.strictEqual(convertBase('100', '10', '62'), '1C');
+    // 適切な例外を投げているか
+    // originalNumberはstringに限定する
+    assert.throws(() => {
+      convertBase(null, base62, base62);
+    }, Error);
+    assert.throws(() => {
+      convertBase(undefined, base62, base62);
+    }, Error);
+    assert.throws(() => {
+      convertBase(NaN, base62, base62);
+    }, Error);
+    assert.throws(() => {
+      convertBase(Infinity, base62, base62);
+    }, Error);
+    assert.throws(() => {
+      convertBase(100, base62, base62);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertBase('100', base62, base62);
+    }, Error);
+
+    // originalBaseNumbersはstringに限定する
+    assert.throws(() => {
+      convertBase('100', null, base62);
+    }, Error);
+    assert.throws(() => {
+      convertBase('100', 1234567890, base62);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertBase('100', '1234567890', base62);
+    }, Error);
+
+    // originalBaseNumbersは同じ文字を含んではいけない
+    assert.throws(() => {
+      convertBase('100', '1234567899', base62);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertBase('100', '1234567890', base62);
+    }, Error);
+
+    // originalBaseNumbersの長さは2以上でなければならない(1進数は定義できないため)
+    assert.throws(() => {
+      convertBase('100', '', base62);
+    }, Error);
+    assert.throws(() => {
+      convertBase('100', '0', base62);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertBase('100', '01', base62);
+    }, Error);
+
+    // originalNumberはoriginalBaseNumbersのみで構成されている必要がある
+    assert.throws(() => {
+      convertBase('', base62, base62);
+    }, Error);
+    assert.throws(() => {
+      convertBase('test', base16, base62);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertBase('test', base62, base62);
+    }, Error);
+    assert.throws(() => {
+      convertBase('test!', base62, base62);
+    }, Error);
+    assert.doesNotThrow(() => {
+      const base63 =
+        '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!';
+      convertBase('test!', base63, base62);
+    }, Error);
+
+    // convertedBaseNumbersはstringに限定する
+    assert.throws(() => {
+      convertBase('100', base62, null);
+    }, Error);
+    assert.throws(() => {
+      convertBase('100', base62, 123456789);
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertBase('100', base62, '123456789');
+    }, Error);
+
+    // convertedBaseNumbersは同じ文字を含んではいけない
+    assert.throws(() => {
+      convertBase('100', base62, '1234567899');
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertBase('100', base62, '1234567890');
+    }, Error);
+
+    // convertedBaseNumbersの長さは2以上でなければならない(1進数は定義できないため)
+    assert.throws(() => {
+      convertBase('100', base62, '');
+    }, Error);
+    assert.throws(() => {
+      convertBase('100', base62, '0');
+    }, Error);
+    assert.doesNotThrow(() => {
+      convertBase('100', base62, '01');
+    }, Error);
+
+    // 適切な値を返しているか
+    assert.strictEqual(convertBase('100', base10, '01'), '1100100');
+    assert.strictEqual(convertBase('100', base10, '012'), '10201');
+    assert.strictEqual(convertBase('100', base10, '0123'), '1210');
+    assert.strictEqual(convertBase('100', base10, base16), '64');
+    assert.strictEqual(convertBase('100', base10, base32), '34');
+    assert.strictEqual(convertBase('100', base10, base62), '1C');
 
     const bigNumberInBase10 = '9999999999'.repeat(10);
     assert.strictEqual(
-      convertBase(bigNumberInBase10, '10', '10'),
+      convertBase(bigNumberInBase10, base10, base10),
       bigNumberInBase10
     );
 
     const bigNumberInBase2 = '1111111111'.repeat(10);
     assert.strictEqual(
-      convertBase(bigNumberInBase2, '2', '2'),
+      convertBase(bigNumberInBase2, '01', '01'),
       bigNumberInBase2
     );
 
     const bigNumberInBase62 = 'ZZZZZZZZZZ'.repeat(10);
     assert.strictEqual(
-      convertBase(bigNumberInBase62, '62', '62'),
+      convertBase(bigNumberInBase62, base62, base62),
+      bigNumberInBase62
+    );
+  });
+
+  it('test convertBaseSimpley()', () => {
+    // 適切な例外を投げているか
+    // originalBaseはintegerに限定する
+    assert.throws(() => {
+      convertBaseSimply('100', null, 10);
+    }, TypeError);
+    assert.throws(() => {
+      convertBaseSimply('100', undefined, 10);
+    }, TypeError);
+    assert.doesNotThrow(() => {
+      convertBaseSimply('100', 10, 10);
+    }, TypeError);
+
+    // convertedBaseはintegerに限定する
+    assert.throws(() => {
+      convertBaseSimply('100', 10, null);
+    }, TypeError);
+    assert.throws(() => {
+      convertBaseSimply('100', 10, undefined);
+    }, TypeError);
+    assert.doesNotThrow(() => {
+      convertBaseSimply('100', 10, 10);
+    }, TypeError);
+
+    // originalBaseは2から62に限定する
+    assert.throws(() => {
+      convertBaseSimply('100', -1, 10);
+    }, RangeError);
+    assert.throws(() => {
+      convertBaseSimply('100', 0, 10);
+    }, RangeError);
+    assert.throws(() => {
+      convertBaseSimply('100', 1, 10);
+    }, RangeError);
+    assert.doesNotThrow(() => {
+      convertBaseSimply('100', 2, 10);
+    }, RangeError);
+    assert.doesNotThrow(() => {
+      convertBaseSimply('100', 62, 10);
+    }, RangeError);
+    assert.throws(() => {
+      convertBaseSimply('100', 63, 10);
+    }, RangeError);
+
+    // convertedBaseは2から62に限定する
+    assert.throws(() => {
+      convertBaseSimply('100', 10, -1);
+    }, RangeError);
+    assert.throws(() => {
+      convertBaseSimply('100', 10, 0);
+    }, RangeError);
+    assert.throws(() => {
+      convertBaseSimply('100', 10, 1);
+    }, RangeError);
+    assert.doesNotThrow(() => {
+      convertBaseSimply('100', 10, 2);
+    }, RangeError);
+    assert.doesNotThrow(() => {
+      convertBaseSimply('100', 10, 62);
+    }, RangeError);
+    assert.throws(() => {
+      convertBaseSimply('100', 10, 63);
+    }, RangeError);
+
+    // 適切な値を返しているか
+    assert.strictEqual(convertBaseSimply('100', 10, 2), '1100100');
+    assert.strictEqual(convertBaseSimply('100', 10, 3), '10201');
+    assert.strictEqual(convertBaseSimply('100', 10, 4), '1210');
+    assert.strictEqual(convertBaseSimply('100', 10, 16), '64');
+    assert.strictEqual(convertBaseSimply('100', 10, 32), '34');
+    assert.strictEqual(convertBaseSimply('100', 10, 62), '1C');
+
+    const bigNumberInBase10 = '9999999999'.repeat(10);
+    assert.strictEqual(
+      convertBaseSimply(bigNumberInBase10, 10, 10),
+      bigNumberInBase10
+    );
+
+    const bigNumberInBase2 = '1111111111'.repeat(10);
+    assert.strictEqual(
+      convertBaseSimply(bigNumberInBase2, 2, 2),
+      bigNumberInBase2
+    );
+
+    const bigNumberInBase62 = 'ZZZZZZZZZZ'.repeat(10);
+    assert.strictEqual(
+      convertBaseSimply(bigNumberInBase62, 62, 62),
       bigNumberInBase62
     );
   });
