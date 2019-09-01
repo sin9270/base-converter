@@ -1,54 +1,52 @@
 'use strict';
 
 import React from 'react';
-import { convertBase } from '../baseConverter';
+import { convertBaseSimply } from '../baseConverter';
 
 const App = state => {
   const originalNumber = state.originalNumber;
-  const originalBaseNumbers = state.originalBaseNumbers;
-  const convertedBaseNumbers = state.convertedBaseNumbers;
+  const originalBase = state.originalBase;
+  const convertedBase = state.convertedBase;
 
   let errMsgForOriginalNumber = '';
-  let errMsgForOriginalBaseNumbers = '';
-  let errMsgForConvertedBaseNumbers = '';
+  let errMsgForOriginalBase = '';
+  let errMsgForConvertedBase = '';
 
   let convertedNumber;
   try {
-    convertedNumber = convertBase(
+    convertedNumber = convertBaseSimply(
       originalNumber,
-      originalBaseNumbers,
-      convertedBaseNumbers
+      originalBase,
+      convertedBase
     );
   } catch (e) {
-    if (e.message === 'First augument must consist of second augument.') {
-      errMsgForOriginalNumber =
-        originalBaseNumbers.length + '進数の数を入力してください。';
+    if (e.message === 'Second augument must be a decimal.') {
+      errMsgForOriginalBase = '10進数の数を入力してください。';
+    } else if (e.message === 'Third augument must be a decimal.') {
+      errMsgForConvertedBase = '10進数の数を入力してください。';
+    } else if (e.message === 'Second augument must be between 2 and 62.') {
+      errMsgForOriginalBase = '2から62の数を入力してください。';
+    } else if (e.message === 'Third augument must be between 2 and 62.') {
+      errMsgForConvertedBase = '2から62の数を入力してください。';
     } else if (
-      e.message === 'Second augument must not contain the same characters.'
+      e.message === 'First augument must consist of second augument.'
     ) {
-      errMsgForOriginalBaseNumbers = '全て異なる文字を入力してください。';
-    } else if (e.message === "Second augument' length must be larger than 1.") {
-      errMsgForOriginalBaseNumbers = '2文字以上を入力してください。';
-    } else if (
-      e.message === 'Third augument must not contain the same characters.'
-    ) {
-      errMsgForConvertedBaseNumbers = '全て異なる文字を入力してください。';
-    } else if (e.message === "Third augument' length must be larger than 1.") {
-      errMsgForConvertedBaseNumbers = '2文字以上を入力してください。';
+      errMsgForOriginalNumber = originalBase + '進数の数を入力してください。';
     }
   }
 
   return (
     <div className="app">
+      <h1>進数変換器</h1>
       <div>
         <input
           type="text"
-          value={originalBaseNumbers}
-          onChange={e => state.inputOriginalBaseNumbers(e.target.value)}
+          value={originalBase}
+          onChange={e => state.inputOriginalBase(e.target.value)}
         />
-        {errMsgForOriginalBaseNumbers}
+        {errMsgForOriginalBase}
       </div>
-      の文字を用いた{originalBaseNumbers.length}進数の
+      進数の
       <div>
         <input
           type="text"
@@ -61,12 +59,12 @@ const App = state => {
       <div>
         <input
           type="text"
-          value={convertedBaseNumbers}
-          onChange={e => state.inputConvertedBaseNumbers(e.target.value)}
+          value={convertedBase}
+          onChange={e => state.inputConvertedBase(e.target.value)}
         />
-        {errMsgForConvertedBaseNumbers}
+        {errMsgForConvertedBase}
       </div>
-      の文字を用いた{convertedBaseNumbers.length}進数に変換すると
+      進数に変換すると
       <div>{convertedNumber}</div>
       です。
     </div>

@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './containers/app';
+import AdvancedApp from './containers/advancedApp';
 import reducer from './reducers/reducer';
 import '../css/style.scss';
 

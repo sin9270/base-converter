@@ -7,6 +7,20 @@ const inputOriginalNumber = originalNumber => {
   };
 };
 
+const inputOriginalBase = originalBase => {
+  return {
+    type: 'INPUT_ORIGINAL_BASE',
+    payload: originalBase
+  };
+};
+
+const inputConvertedBase = convertedBase => {
+  return {
+    type: 'INPUT_CONVERTED_BASE',
+    payload: convertedBase
+  };
+};
+
 const inputOriginalBaseNumbers = originalBaseNumbers => {
   return {
     type: 'INPUT_ORIGINAL_BASE_NUMBERS',
@@ -23,6 +37,8 @@ const inputConvertedBaseNumbers = convertedBaseNumbers => {
 
 export {
   inputOriginalNumber,
+  inputOriginalBase,
+  inputConvertedBase,
   inputOriginalBaseNumbers,
   inputConvertedBaseNumbers
 };
