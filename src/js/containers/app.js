@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import App from '../components/app';
 import {
   inputOriginalNumber,
-  inputOriginalBaseNumbers,
-  inputConvertedBaseNumbers
+  inputOriginalBase,
+  inputConvertedBase
 } from '../actions/action';
 
 const mapStateToProps = state => {
   return {
     originalNumber: state.originalNumber,
-    originalBaseNumbers: state.originalBaseNumbers,
-    convertedBaseNumbers: state.convertedBaseNumbers
+    originalBase: state.originalBase,
+    convertedBase: state.convertedBase
   };
 };
 
@@ -20,10 +20,10 @@ const mapDispachToProps = dispatch => {
   return {
     inputOriginalNumber: originalNumber =>
       dispatch(inputOriginalNumber(originalNumber)),
-    inputOriginalBaseNumbers: originalBaseNumbers =>
-      dispatch(inputOriginalBaseNumbers(originalBaseNumbers)),
-    inputConvertedBaseNumbers: convertedBaseNumbers =>
-      dispatch(inputConvertedBaseNumbers(convertedBaseNumbers))
+    inputOriginalBase: originalBase =>
+      dispatch(inputOriginalBase(originalBase)),
+    inputConvertedBase: convertedBase =>
+      dispatch(inputConvertedBase(convertedBase))
   };
 };
 
