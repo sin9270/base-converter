@@ -148,13 +148,25 @@ const convertBase = (
 };
 
 const convertBaseSimply = (originalNumber, originalBase, convertedBase) => {
-  // originalBaseとconvertedBaseはintegerに限定する
-  if (typeof originalBase !== 'number') {
-    throw new TypeError('Second augument must be a number.');
+  // originalBaseとconvertedBaseはstringに限定する
+  if (typeof originalBase !== 'string') {
+    throw new Error('Second augument must be a string.');
   }
-  if (typeof convertedBase !== 'number') {
-    throw new TypeError('Third augument must be a number.');
+  if (typeof convertedBase !== 'string') {
+    throw new Error('Third augument must be a string.');
   }
+
+  // originalBaseとconvertedBaseは正の10進数に限定する
+  if (!isDecimalString(originalBase)) {
+    throw new Error('Second augument must be a decimal.');
+  }
+  if (!isDecimalString(convertedBase)) {
+    throw new Error('Third augument must be a decimal.');
+  }
+
+  // originalBaseとconvertedBaseを文字列から数値に変換する
+  originalBase = Number(originalBase);
+  convertedBase = Number(convertedBase);
 
   // originalBaseとconvertedBaseは2から62に限定する
   if (!(2 <= originalBase && originalBase <= 62)) {
