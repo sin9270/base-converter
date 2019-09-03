@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Nothing to do in the install phase.
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase.
+  build:
+    commands:
+      - echo Nothing to do in the build phase.
+  post_build:
+    commands:
+      - echo Upload files to S3 bucket.
+      - aws s3 sync --delete public s3://base-converter
