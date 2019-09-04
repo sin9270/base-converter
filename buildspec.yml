@@ -2,15 +2,16 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 10
     commands:
-      - echo Nothing to do in the install phase.
+      - npm install
   pre_build:
     commands:
-      - echo Nothing to do in the pre_build phase.
+      - npm test
   build:
     commands:
-      - echo Nothing to do in the build phase.
+      - npm run bundle
   post_build:
     commands:
-      - echo Upload files to S3 bucket.
       - aws s3 sync --delete public s3://base-converter
