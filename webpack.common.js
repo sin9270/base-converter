@@ -1,10 +1,11 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
-  entry: "./src/js/index.js",
+  entry: './src/js/index.js',
   output: {
-    filename: "bundle.js",
-    path: path.join(__dirname, "public/js")
+    filename: 'bundle.js',
+    path: path.join(__dirname, 'public/js/'),
+    publicPath: '/js/'
   },
   module: {
     rules: [
@@ -13,11 +14,11 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
               presets: [
-                ["@babel/preset-env", { modules: false }],
-                "@babel/preset-react"
+                ['@babel/preset-env', { modules: false }],
+                '@babel/preset-react'
               ]
             }
           }
@@ -26,9 +27,9 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               url: false,
 
@@ -38,7 +39,7 @@ module.exports = {
               importLoaders: 2
             }
           },
-          "sass-loader"
+          'sass-loader'
         ]
       }
     ]

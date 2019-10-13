@@ -1,7 +1,8 @@
 /* eslint-env mocha */
 'use strict';
 
-import assert from 'assert';
+import chai from 'chai';
+const assert = chai.assert;
 import {
   matchRegExp,
   isDecimalString,
@@ -21,13 +22,13 @@ describe('test baseConverter', () => {
     // 適切な例外を投げているか
     assert.throws(() => {
       matchRegExp('abc');
-    }, TypeError('Second augument must be a RegExp.'));
+    }, TypeError);
     assert.throws(() => {
       matchRegExp('abc', 'b');
-    }, TypeError('Second augument must be a RegExp.'));
+    }, TypeError);
     assert.throws(() => {
       matchRegExp('012', 1);
-    }, TypeError('Second augument must be a RegExp.'));
+    }, TypeError);
 
     // 適切な値を返しているか
     assert.strictEqual(matchRegExp('0', /0/), true);

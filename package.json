@@ -8,7 +8,7 @@
     "build:dev": "npx webpack --config webpack.dev.js",
     "start": "npx webpack-dev-server --config webpack.dev.js",
     "test": "mocha --require @babel/register",
-    "lint": "eslint --fix public/index.html src/js/* test/*"
+    "lint": "eslint --fix public/index.html src/js/* src/css/* test/* webpack.* "
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "@babel/register": "^7.4.4",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.5",
+    "chai": "^4.2.0",
     "css-loader": "^2.1.1",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
@@ -37,6 +38,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@material-ui/core": "^4.5.0",
     "decimal.js": "^10.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

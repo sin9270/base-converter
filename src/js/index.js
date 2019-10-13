@@ -4,10 +4,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import reducer from './reducers/reducer';
 import App from './containers/app';
 import AdvancedApp from './containers/advancedApp';
-import reducer from './reducers/reducer';
 import '../css/style.scss';
 
 const middlewares = [];
@@ -21,10 +21,10 @@ const store = createStore(reducer, applyMiddleware(...middlewares));
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Link to="/">App</Link>
-      <Link to="/advanced">AdvancedApp</Link>
-      <Route exact path="/" component={App} />
-      <Route path="/advanced" component={AdvancedApp} />
+      <Switch>
+        <Route exact path="/advanced" component={AdvancedApp} />
+        <Route path="/" component={App} />
+      </Switch>
     </Router>
   </Provider>,
   document.getElementById('root')

@@ -1,13 +1,14 @@
 'use strict';
 
-const base62 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const base10 = '0123456789';
+const base16 = '0123456789abcdef';
 
 const initialState = {
   originalNumber: '',
   originalBase: '10',
   convertedBase: '16',
-  originalBaseNumbers: base62,
-  convertedBaseNumbers: base62
+  originalBaseNumbers: base10,
+  convertedBaseNumbers: base16
 };
 
 const reducer = (state = initialState, action) => {

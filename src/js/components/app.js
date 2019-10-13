@@ -1,18 +1,31 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import TabRouter from './TabRouter';
+import BootstrapInput from './BootstrapInput';
+import ErrorMessage from './ErrorMessage';
 import { convertBaseSimply } from '../baseConverter';
 
-const App = state => {
-  const originalNumber = state.originalNumber;
-  const originalBase = state.originalBase;
-  const convertedBase = state.convertedBase;
+const propTypes = {
+  originalNumber: PropTypes.string.isRequired,
+  originalBase: PropTypes.string.isRequired,
+  convertedBase: PropTypes.string.isRequired,
+  inputOriginalBase: PropTypes.func.isRequired,
+  inputOriginalNumber: PropTypes.func.isRequired,
+  inputConvertedBase: PropTypes.func.isRequired
+};
+
+const App = props => {
+  const originalNumber = props.originalNumber;
+  const originalBase = props.originalBase;
+  const convertedBase = props.convertedBase;
 
   let errMsgForOriginalNumber = '';
   let errMsgForOriginalBase = '';
   let errMsgForConvertedBase = '';
+  let convertedNumber = '';
 
-  let convertedNumber;
   try {
     convertedNumber = convertBaseSimply(
       originalNumber,
@@ -38,37 +51,47 @@ const App = state => {
   return (
     <div className="app">
       <h1>進数変換器</h1>
-      <div>
-        <input
-          type="text"
-          value={originalBase}
-          onChange={e => state.inputOriginalBase(e.target.value)}
-        />
-        {errMsgForOriginalBase}
+      <TabRouter initialTab="App" />
+      <div className="main">
+        <div>
+          <BootstrapInput
+            id="bootstrap-input"
+            defaultValue={originalBase}
+            onChange={e => props.inputOriginalBase(e.target.value)}
+          />
+          <ErrorMessage message={errMsgForOriginalBase} />
+        </div>
+        進数の
+        <div>
+          <BootstrapInput
+            id="bootstrap-input"
+            onChange={e => props.inputOriginalNumber(e.target.value)}
+          />
+          {originalNumber ? (
+            <ErrorMessage message={errMsgForOriginalNumber} />
+          ) : (
+            ''
+          )}
+        </div>
+        を
+        <div>
+          <BootstrapInput
+            id="bootstrap-input"
+            defaultValue={convertedBase}
+            onChange={e => props.inputConvertedBase(e.target.value)}
+          />
+          <ErrorMessage message={errMsgForConvertedBase} />
+        </div>
+        進数に変換すると
+        <div>
+          <BootstrapInput id="bootstrap-input" value={convertedNumber} />
+        </div>
+        です。
       </div>
-      進数の
-      <div>
-        <input
-          type="text"
-          value={originalNumber}
-          onChange={e => state.inputOriginalNumber(e.target.value)}
-        />
-        {originalNumber ? errMsgForOriginalNumber : ''}
-      </div>
-      を
-      <div>
-        <input
-          type="text"
-          value={convertedBase}
-          onChange={e => state.inputConvertedBase(e.target.value)}
-        />
-        {errMsgForConvertedBase}
-      </div>
-      進数に変換すると
-      <div>{convertedNumber}</div>
-      です。
     </div>
   );
 };
+
+App.propTypes = propTypes;
 
 export default App;
