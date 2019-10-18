@@ -5,11 +5,12 @@
     "commonjs": true,
     "es6": true
   },
-  "plugins": ["node", "react", "html", "prettier"],
+  "plugins": ["node", "react", "json", "html", "jest", "prettier"],
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
     "plugin:react/recommended",
+    "plugin:jest/recommended",
     "plugin:prettier/recommended",
     "prettier/react"
   ],

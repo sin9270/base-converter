@@ -1,7 +1,7 @@
 'use strict';
 
 import { connect } from 'react-redux';
-import AdvancedApp from '../components/advancedApp';
+import AdvancedApp from '../components/AdvancedApp';
 import {
   inputOriginalNumber,
   inputOriginalBaseNumbers,

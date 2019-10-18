@@ -6,8 +6,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import reducer from './reducers/reducer';
-import App from './containers/app';
-import AdvancedApp from './containers/advancedApp';
+import App from './containers/App';
+import AdvancedApp from './containers/AdvancedApp';
 import '../css/style.scss';
 
 const middlewares = [];

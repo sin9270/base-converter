@@ -7,10 +7,18 @@
     "build:prod": "npx webpack --config webpack.prod.js",
     "build:dev": "npx webpack --config webpack.dev.js",
     "start": "npx webpack-dev-server --config webpack.dev.js",
-    "test": "mocha --require @babel/register",
-    "lint": "eslint --fix public/index.html src/js/* src/css/* test/* webpack.* "
+    "test": "npx jest --coverage",
+    "test:mocha": "mocha --require @babel/register",
+    "lint": "eslint '**/*.js' '**/*.json' '**/*.html'",
+    "fix": "eslint --fix '**/*.js' '**/*.json' '**/*.html'"
   },
-  "author": "",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run fix",
+      "pre-push": "npm test"
+    }
+  },
+  "author": "Shin Watanabe",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -18,24 +26,31 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.4.4",
     "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.5",
     "chai": "^4.2.0",
     "css-loader": "^2.1.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-jest": "^22.19.0",
+    "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
+    "husky": "^3.0.9",
+    "jest": "^24.9.0",
     "mocha": "^6.1.4",
     "node-sass": "^4.12.0",
     "prettier": "^1.18.2",
+    "react-test-renderer": "^16.8.6",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.1",
-    "webpack-dev-server": "^3.8.2",
-    "webpack-merge": "^4.2.2"
+    "webpack-dev-server": "^3.8.2"
   },
   "dependencies": {
     "@material-ui/core": "^4.5.0",
@@ -45,6 +60,7 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.4",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "webpack-merge": "^4.2.2"
   }
 }

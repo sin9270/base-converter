@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test ErrorMessage snapshotと比較 1`] = `
+<span
+  className="errorMassage"
+>
+  An error occurred!
+</span>
+`;

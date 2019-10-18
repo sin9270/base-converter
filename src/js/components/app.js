@@ -65,6 +65,7 @@ const App = props => {
         <div>
           <BootstrapInput
             id="bootstrap-input"
+            defaultValue={originalNumber}
             onChange={e => props.inputOriginalNumber(e.target.value)}
           />
           {originalNumber ? (
