@@ -16,7 +16,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispachToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     inputOriginalNumber: originalNumber =>
       dispatch(inputOriginalNumber(originalNumber)),
@@ -29,5 +29,5 @@ const mapDispachToProps = dispatch => {
 
 export default connect(
   mapStateToProps,
-  mapDispachToProps
+  mapDispatchToProps
 )(App);
