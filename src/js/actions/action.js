@@ -1,44 +1,46 @@
 'use strict';
 
-const inputOriginalNumber = originalNumber => {
-  return {
-    type: 'INPUT_ORIGINAL_NUMBER',
-    payload: originalNumber
-  };
+export const actionTypes = {
+  INPUT_ORIGINAL_NUMBER: 'INPUT_ORIGINAL_NUMBER',
+  INPUT_ORIGINAL_BASE: 'INPUT_ORIGINAL_BASE',
+  INPUT_CONVERTED_BASE: 'INPUT_CONVERTED_BASE',
+  INPUT_ORIGINAL_BASE_NUMBERS: 'INPUT_ORIGINAL_BASE_NUMBERS',
+  INPUT_CONVERTED_BASE_NUMBERS: 'INPUT_CONVERTED_BASE_NUMBERS'
 };
 
-const inputOriginalBase = originalBase => {
-  return {
-    type: 'INPUT_ORIGINAL_BASE',
-    payload: originalBase
-  };
-};
+export const actionCreators = {
+  inputOriginalNumber: originalNumber => {
+    return {
+      type: actionTypes.INPUT_ORIGINAL_NUMBER,
+      payload: originalNumber
+    };
+  },
 
-const inputConvertedBase = convertedBase => {
-  return {
-    type: 'INPUT_CONVERTED_BASE',
-    payload: convertedBase
-  };
-};
+  inputOriginalBase: originalBase => {
+    return {
+      type: actionTypes.INPUT_ORIGINAL_BASE,
+      payload: originalBase
+    };
+  },
 
-const inputOriginalBaseNumbers = originalBaseNumbers => {
-  return {
-    type: 'INPUT_ORIGINAL_BASE_NUMBERS',
-    payload: originalBaseNumbers
-  };
-};
+  inputConvertedBase: convertedBase => {
+    return {
+      type: actionTypes.INPUT_CONVERTED_BASE,
+      payload: convertedBase
+    };
+  },
 
-const inputConvertedBaseNumbers = convertedBaseNumbers => {
-  return {
-    type: 'INPUT_CONVERTED_BASE_NUMBERS',
-    payload: convertedBaseNumbers
-  };
-};
+  inputOriginalBaseNumbers: originalBaseNumbers => {
+    return {
+      type: actionTypes.INPUT_ORIGINAL_BASE_NUMBERS,
+      payload: originalBaseNumbers
+    };
+  },
 
-export {
-  inputOriginalNumber,
-  inputOriginalBase,
-  inputConvertedBase,
-  inputOriginalBaseNumbers,
-  inputConvertedBaseNumbers
+  inputConvertedBaseNumbers: convertedBaseNumbers => {
+    return {
+      type: actionTypes.INPUT_CONVERTED_BASE_NUMBERS,
+      payload: convertedBaseNumbers
+    };
+  }
 };

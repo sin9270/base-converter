@@ -1,12 +1,9 @@
 'use strict';
 
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AdvancedApp from '../components/AdvancedApp';
-import {
-  inputOriginalNumber,
-  inputOriginalBaseNumbers,
-  inputConvertedBaseNumbers
-} from '../actions/action';
+import { actionCreators } from '../actions/action';
 
 const mapStateToProps = state => {
   return {
@@ -17,14 +14,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    inputOriginalNumber: originalNumber =>
-      dispatch(inputOriginalNumber(originalNumber)),
-    inputOriginalBaseNumbers: originalBaseNumbers =>
-      dispatch(inputOriginalBaseNumbers(originalBaseNumbers)),
-    inputConvertedBaseNumbers: convertedBaseNumbers =>
-      dispatch(inputConvertedBaseNumbers(convertedBaseNumbers))
-  };
+  return bindActionCreators(actionCreators, dispatch);
 };
 
 export default connect(
