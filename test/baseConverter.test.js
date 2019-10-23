@@ -10,7 +10,7 @@ import {
   convertToDecimal,
   convertBase,
   convertBaseSimply
-} from '../src/js/baseConverter';
+} from '../src/js/libs/baseConverter';
 
 const base10 = '0123456789';
 const base16 = '0123456789abcdef';

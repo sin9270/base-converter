@@ -7,9 +7,9 @@ import { actionCreators } from '../actions/action';
 
 const mapStateToProps = state => {
   return {
-    originalNumber: state.originalNumber,
-    originalBase: state.originalBase,
-    convertedBase: state.convertedBase
+    originalNumber: state.reducer.originalNumber,
+    originalBase: state.reducer.originalBase,
+    convertedBase: state.reducer.convertedBase
   };
 };
 

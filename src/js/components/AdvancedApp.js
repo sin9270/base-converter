@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import TabRouter from './TabRouter';
 import BootstrapInput from './BootstrapInput';
 import ErrorMessage from './ErrorMessage';
-import { convertBase } from '../baseConverter';
+import { convertBase } from '../libs/baseConverter';
 
 const propTypes = {
   originalNumber: PropTypes.string.isRequired,
