@@ -17,7 +17,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdvancedApp);
+export default connect(mapStateToProps, mapDispatchToProps)(AdvancedApp);
