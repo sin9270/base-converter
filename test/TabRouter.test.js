@@ -9,7 +9,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 // propTypesの型違反は標準エラー出力されるだけなので、それを検知するためエラーを投げるように上書く
-console.error = error => {
+console.error = (error) => {
   throw new Error(error);
 };
 
@@ -42,10 +42,7 @@ describe('test TabRouter', () => {
     // wrapper.find(Tab).find({ value: 'AdvancedApp' }).simulate('click');
 
     // 親のTabsのonChange()が発火すると、hooksによりTabsのvalueが変化するので、その値をチェックする
-    wrapper
-      .find(Tabs)
-      .props()
-      .onChange(null, 'AdvancedApp');
+    wrapper.find(Tabs).props().onChange(null, 'AdvancedApp');
     expect(wrapper.find(Tabs).props().value).toBe('AdvancedApp');
   });
 

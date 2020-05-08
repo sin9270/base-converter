@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 import AdvancedApp from '../components/AdvancedApp';
 import { actionCreators } from '../actions/action';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     originalNumber: state.reducer.originalNumber,
     originalBaseNumbers: state.reducer.originalBaseNumbers,
-    convertedBaseNumbers: state.reducer.convertedBaseNumbers
+    convertedBaseNumbers: state.reducer.convertedBaseNumbers,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

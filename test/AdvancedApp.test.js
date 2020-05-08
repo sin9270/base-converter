@@ -16,7 +16,7 @@ describe('test AdvancedApp', () => {
     convertedBaseNumbers: '0123456789abcdef',
     inputOriginalBaseNumbers: jest.fn(),
     inputOriginalNumber: jest.fn(),
-    inputConvertedBaseNumbers: jest.fn()
+    inputConvertedBaseNumbers: jest.fn(),
   };
 
   let wrapper;

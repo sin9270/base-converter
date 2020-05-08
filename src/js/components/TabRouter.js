@@ -8,10 +8,10 @@ import Tab from '@material-ui/core/Tab';
 import { Link } from 'react-router-dom';
 
 const propTypes = {
-  initialTab: PropTypes.string.isRequired
+  initialTab: PropTypes.string.isRequired,
 };
 
-const TabRouter = props => {
+const TabRouter = (props) => {
   const [value, setValue] = React.useState(props.initialTab);
 
   const handleChange = (event, newValue) => {

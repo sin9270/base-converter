@@ -8,7 +8,7 @@ const initialState = {
   originalBase: '10',
   convertedBase: '16',
   originalBaseNumbers: base10,
-  convertedBaseNumbers: base16
+  convertedBaseNumbers: base16,
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,27 +16,27 @@ const reducer = (state = initialState, action) => {
     case 'INPUT_ORIGINAL_NUMBER':
       return {
         ...state,
-        originalNumber: action.payload
+        originalNumber: action.payload,
       };
     case 'INPUT_ORIGINAL_BASE':
       return {
         ...state,
-        originalBase: action.payload
+        originalBase: action.payload,
       };
     case 'INPUT_CONVERTED_BASE':
       return {
         ...state,
-        convertedBase: action.payload
+        convertedBase: action.payload,
       };
     case 'INPUT_ORIGINAL_BASE_NUMBERS':
       return {
         ...state,
-        originalBaseNumbers: action.payload
+        originalBaseNumbers: action.payload,
       };
     case 'INPUT_CONVERTED_BASE_NUMBERS':
       return {
         ...state,
-        convertedBaseNumbers: action.payload
+        convertedBaseNumbers: action.payload,
       };
     default:
       return state;

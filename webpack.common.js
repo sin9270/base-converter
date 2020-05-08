@@ -5,7 +5,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'public/js/'),
-    publicPath: '/js/'
+    publicPath: '/js/',
   },
   module: {
     rules: [
@@ -18,11 +18,11 @@ module.exports = {
             options: {
               presets: [
                 ['@babel/preset-env', { modules: false }],
-                '@babel/preset-react'
-              ]
-            }
-          }
-        ]
+                '@babel/preset-react',
+              ],
+            },
+          },
+        ],
       },
       {
         test: /\.s[ac]ss$/i,
@@ -36,12 +36,12 @@ module.exports = {
               // 0 => no loaders (default);
               // 1 => postcss-loader;
               // 2 => postcss-loader, sass-loader
-              importLoaders: 2
-            }
+              importLoaders: 2,
+            },
           },
-          'sass-loader'
-        ]
-      }
-    ]
-  }
+          'sass-loader',
+        ],
+      },
+    ],
+  },
 };

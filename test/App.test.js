@@ -16,7 +16,7 @@ describe('test App', () => {
     convertedBase: '16',
     inputOriginalBase: jest.fn(),
     inputOriginalNumber: jest.fn(),
-    inputConvertedBase: jest.fn()
+    inputConvertedBase: jest.fn(),
   };
 
   let wrapper;

@@ -19,7 +19,7 @@ const matchRegExp = (value, regExp) => {
 
 // 整数文字列か判定する
 // 先頭が0の場合も認める
-const isDecimalString = value => {
+const isDecimalString = (value) => {
   if (typeof value !== 'string') {
     return false;
   }
@@ -202,5 +202,5 @@ export {
   convertFromDecimal,
   convertToDecimal,
   convertBase,
-  convertBaseSimply
+  convertBaseSimply,
 };

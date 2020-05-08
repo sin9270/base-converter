@@ -34,6 +34,12 @@
       {
         "ignores": ["modules"]
       }
+    ],
+    "node/no-unpublished-import": [
+      "error",
+      {
+        "allowModules": ["enzyme", "enzyme-adapter-react-16", "react-test-renderer", "chai"]
+      }
     ]
   }
 }

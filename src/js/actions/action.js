@@ -5,42 +5,42 @@ export const actionTypes = {
   INPUT_ORIGINAL_BASE: 'INPUT_ORIGINAL_BASE',
   INPUT_CONVERTED_BASE: 'INPUT_CONVERTED_BASE',
   INPUT_ORIGINAL_BASE_NUMBERS: 'INPUT_ORIGINAL_BASE_NUMBERS',
-  INPUT_CONVERTED_BASE_NUMBERS: 'INPUT_CONVERTED_BASE_NUMBERS'
+  INPUT_CONVERTED_BASE_NUMBERS: 'INPUT_CONVERTED_BASE_NUMBERS',
 };
 
 export const actionCreators = {
-  inputOriginalNumber: originalNumber => {
+  inputOriginalNumber: (originalNumber) => {
     return {
       type: actionTypes.INPUT_ORIGINAL_NUMBER,
-      payload: originalNumber
+      payload: originalNumber,
     };
   },
 
-  inputOriginalBase: originalBase => {
+  inputOriginalBase: (originalBase) => {
     return {
       type: actionTypes.INPUT_ORIGINAL_BASE,
-      payload: originalBase
+      payload: originalBase,
     };
   },
 
-  inputConvertedBase: convertedBase => {
+  inputConvertedBase: (convertedBase) => {
     return {
       type: actionTypes.INPUT_CONVERTED_BASE,
-      payload: convertedBase
+      payload: convertedBase,
     };
   },
 
-  inputOriginalBaseNumbers: originalBaseNumbers => {
+  inputOriginalBaseNumbers: (originalBaseNumbers) => {
     return {
       type: actionTypes.INPUT_ORIGINAL_BASE_NUMBERS,
-      payload: originalBaseNumbers
+      payload: originalBaseNumbers,
     };
   },
 
-  inputConvertedBaseNumbers: convertedBaseNumbers => {
+  inputConvertedBaseNumbers: (convertedBaseNumbers) => {
     return {
       type: actionTypes.INPUT_CONVERTED_BASE_NUMBERS,
-      payload: convertedBaseNumbers
+      payload: convertedBaseNumbers,
     };
-  }
+  },
 };

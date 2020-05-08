@@ -7,7 +7,7 @@ import renderer from 'react-test-renderer';
 import ErrorMessage from '../src/js/components/ErrorMessage';
 
 // propTypesの型違反は標準エラー出力されるだけなので、それを検知するためエラーを投げるように上書く
-console.error = error => {
+console.error = (error) => {
   throw new Error(error);
 };
 

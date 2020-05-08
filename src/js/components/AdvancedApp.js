@@ -13,10 +13,10 @@ const propTypes = {
   convertedBaseNumbers: PropTypes.string.isRequired,
   inputOriginalBaseNumbers: PropTypes.func.isRequired,
   inputOriginalNumber: PropTypes.func.isRequired,
-  inputConvertedBaseNumbers: PropTypes.func.isRequired
+  inputConvertedBaseNumbers: PropTypes.func.isRequired,
 };
 
-const AdvancedApp = props => {
+const AdvancedApp = (props) => {
   const originalNumber = props.originalNumber;
   const originalBaseNumbers = props.originalBaseNumbers;
   const convertedBaseNumbers = props.convertedBaseNumbers;
@@ -60,7 +60,7 @@ const AdvancedApp = props => {
           <BootstrapInput
             id="bootstrap-input"
             defaultValue={originalBaseNumbers}
-            onChange={e => props.inputOriginalBaseNumbers(e.target.value)}
+            onChange={(e) => props.inputOriginalBaseNumbers(e.target.value)}
           />
           <ErrorMessage message={errMsgForOriginalBaseNumbers} />
         </div>
@@ -69,7 +69,7 @@ const AdvancedApp = props => {
           <BootstrapInput
             id="bootstrap-input"
             defaultValue={originalNumber}
-            onChange={e => props.inputOriginalNumber(e.target.value)}
+            onChange={(e) => props.inputOriginalNumber(e.target.value)}
           />
           {originalNumber ? (
             <ErrorMessage message={errMsgForOriginalNumber} />
@@ -82,7 +82,7 @@ const AdvancedApp = props => {
           <BootstrapInput
             id="bootstrap-input"
             defaultValue={convertedBaseNumbers}
-            onChange={e => props.inputConvertedBaseNumbers(e.target.value)}
+            onChange={(e) => props.inputConvertedBaseNumbers(e.target.value)}
           />
           <ErrorMessage message={errMsgForConvertedBaseNumbers} />
         </div>
