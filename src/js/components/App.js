@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import TabRouter from './TabRouter';
 import BootstrapInput from './BootstrapInput';
 import ErrorMessage from './ErrorMessage';
-import { convertBaseSimply } from '../libs/baseConverter';
+import { convertBase } from 'simple-base-converter';
 
 const propTypes = {
   originalNumber: PropTypes.string.isRequired,
@@ -18,32 +18,25 @@ const propTypes = {
 
 const App = (props) => {
   const originalNumber = props.originalNumber;
-  const originalBase = props.originalBase;
-  const convertedBase = props.convertedBase;
+  const originalBase = parseInt(props.originalBase);
+  const convertedBase = parseInt(props.convertedBase);
 
   let errMsgForOriginalNumber = '';
   let errMsgForOriginalBase = '';
   let errMsgForConvertedBase = '';
   let convertedNumber = '';
 
+  if (!(2 <= originalBase && originalBase <= 62)) {
+    errMsgForOriginalBase = '2から62の数を入力してください。';
+  }
+  if (!(2 <= convertedBase && convertedBase <= 62)) {
+    errMsgForConvertedBase = '2から62の数を入力してください。';
+  }
+
   try {
-    convertedNumber = convertBaseSimply(
-      originalNumber,
-      originalBase,
-      convertedBase
-    );
+    convertedNumber = convertBase(originalNumber, originalBase, convertedBase);
   } catch (e) {
-    if (e.message === 'Second augument must be a decimal.') {
-      errMsgForOriginalBase = '10進数の数を入力してください。';
-    } else if (e.message === 'Third augument must be a decimal.') {
-      errMsgForConvertedBase = '10進数の数を入力してください。';
-    } else if (e.message === 'Second augument must be between 2 and 62.') {
-      errMsgForOriginalBase = '2から62の数を入力してください。';
-    } else if (e.message === 'Third augument must be between 2 and 62.') {
-      errMsgForConvertedBase = '2から62の数を入力してください。';
-    } else if (
-      e.message === 'First augument must consist of second augument.'
-    ) {
+    if (e.message === 'First augument must consist of second augument.') {
       errMsgForOriginalNumber = originalBase + '進数の数を入力してください。';
     }
   }
@@ -56,7 +49,7 @@ const App = (props) => {
         <div>
           <BootstrapInput
             id="bootstrap-input"
-            defaultValue={originalBase}
+            defaultValue={props.originalBase}
             onChange={(e) => props.inputOriginalBase(e.target.value)}
           />
           <ErrorMessage message={errMsgForOriginalBase} />
@@ -78,7 +71,7 @@ const App = (props) => {
         <div>
           <BootstrapInput
             id="bootstrap-input"
-            defaultValue={convertedBase}
+            defaultValue={props.convertedBase}
             onChange={(e) => props.inputConvertedBase(e.target.value)}
           />
           <ErrorMessage message={errMsgForConvertedBase} />

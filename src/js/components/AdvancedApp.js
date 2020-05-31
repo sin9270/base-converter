@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import TabRouter from './TabRouter';
 import BootstrapInput from './BootstrapInput';
 import ErrorMessage from './ErrorMessage';
-import { convertBase } from '../libs/baseConverter';
+import { convertBase } from 'simple-base-converter';
 
 const propTypes = {
   originalNumber: PropTypes.string.isRequired,
@@ -40,13 +40,19 @@ const AdvancedApp = (props) => {
       e.message === 'Second augument must not contain the same characters.'
     ) {
       errMsgForOriginalBaseNumbers = '全て異なる文字を入力してください。';
-    } else if (e.message === "Second augument' length must be larger than 1.") {
+    } else if (
+      e.message ===
+      "Second augument' length must be larger than 1. Base 1 or smaller cannnot be defined."
+    ) {
       errMsgForOriginalBaseNumbers = '2文字以上を入力してください。';
     } else if (
       e.message === 'Third augument must not contain the same characters.'
     ) {
       errMsgForConvertedBaseNumbers = '全て異なる文字を入力してください。';
-    } else if (e.message === "Third augument' length must be larger than 1.") {
+    } else if (
+      e.message ===
+      "Third augument' length must be larger than 1. Base 1 or smaller cannnot be defined."
+    ) {
       errMsgForConvertedBaseNumbers = '2文字以上を入力してください。';
     }
   }
