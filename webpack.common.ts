@@ -1,12 +1,19 @@
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
 import * as webpack from 'webpack';
 
 const config: webpack.Configuration = {
   entry: './src/js/index.tsx',
+  plugins: [
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['index.html', 'bundle.*.js'],
+    }),
+    new HtmlWebpackPlugin({ template: 'src/index.html' }),
+  ],
   output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, 'public/js/'),
-    publicPath: '/js/',
+    filename: 'bundle.[contenthash].js',
+    path: path.join(__dirname, 'public/'),
   },
   module: {
     rules: [

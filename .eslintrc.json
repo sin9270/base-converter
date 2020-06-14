@@ -61,7 +61,9 @@
           "webpack-merge",
           "enzyme",
           "enzyme-adapter-react-16",
-          "react-test-renderer"
+          "react-test-renderer",
+          "clean-webpack-plugin",
+          "html-webpack-plugin"
         ]
       }
     ],

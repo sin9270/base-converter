@@ -1,4 +1,5 @@
 dist/
 node_modules/
-public/js/
+public/index.html
+public/bundle.*.js
 coverage/
