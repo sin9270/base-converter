@@ -1,5 +1,3 @@
-'use strict';
-
 import { actionCreators } from '../src/js/actions/action';
 import reducer from '../src/js/reducers/reducer';
 

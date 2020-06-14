@@ -1,7 +1,5 @@
-'use strict';
-
-import { fade, withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
+import { fade, withStyles } from '@material-ui/core/styles';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {

@@ -1,13 +1,10 @@
-/* eslint-env mocha */
-'use strict';
+import { shallow, ShallowWrapper } from 'enzyme';
+import * as React from 'react';
 
-import React from 'react';
-import { shallow } from 'enzyme';
-// import renderer from 'react-test-renderer';
 import App from '../src/js/components/App';
-import TabRouter from '../src/js/components/TabRouter';
 import BootstrapInput from '../src/js/components/BootstrapInput';
 import ErrorMessage from '../src/js/components/ErrorMessage';
+import TabRouter from '../src/js/components/TabRouter';
 
 describe('test App', () => {
   const testProps = {
@@ -19,7 +16,7 @@ describe('test App', () => {
     inputConvertedBase: jest.fn(),
   };
 
-  let wrapper;
+  let wrapper: ShallowWrapper;
 
   beforeEach(() => {
     wrapper = shallow(<App {...testProps} />);
@@ -50,11 +47,4 @@ describe('test App', () => {
       .simulate('change', { target: { value: '0' } });
     expect(testProps.inputConvertedBase).toHaveBeenCalled();
   });
-
-  // it('snapshotと比較', () => {
-  //   const tree = renderer
-  //     .create(<App {...testProps} />)
-  //     .toJSON();
-  //   expect(tree).toMatchSnapshot();
-  // });
 });

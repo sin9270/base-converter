@@ -1,22 +1,20 @@
-'use strict';
-
-import React from 'react';
-import PropTypes from 'prop-types';
-import TabRouter from './TabRouter';
-import BootstrapInput from './BootstrapInput';
-import ErrorMessage from './ErrorMessage';
+import * as React from 'react';
 import { convertBase } from 'simple-base-converter';
 
-const propTypes = {
-  originalNumber: PropTypes.string.isRequired,
-  originalBaseNumbers: PropTypes.string.isRequired,
-  convertedBaseNumbers: PropTypes.string.isRequired,
-  inputOriginalBaseNumbers: PropTypes.func.isRequired,
-  inputOriginalNumber: PropTypes.func.isRequired,
-  inputConvertedBaseNumbers: PropTypes.func.isRequired,
-};
+import BootstrapInput from './BootstrapInput';
+import ErrorMessage from './ErrorMessage';
+import TabRouter from './TabRouter';
 
-const AdvancedApp = (props) => {
+interface Props {
+  originalNumber: string;
+  originalBaseNumbers: string;
+  convertedBaseNumbers: string;
+  inputOriginalBaseNumbers: (originalBase: string) => void;
+  inputOriginalNumber: (originalNumber: string) => void;
+  inputConvertedBaseNumbers: (convertedBase: string) => void;
+}
+
+const AdvancedApp: React.FC<Props> = (props) => {
   const originalNumber = props.originalNumber;
   const originalBaseNumbers = props.originalBaseNumbers;
   const convertedBaseNumbers = props.convertedBaseNumbers;
@@ -101,7 +99,5 @@ const AdvancedApp = (props) => {
     </div>
   );
 };
-
-AdvancedApp.propTypes = propTypes;
 
 export default AdvancedApp;

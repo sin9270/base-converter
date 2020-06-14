@@ -1,13 +1,13 @@
-'use strict';
+import '../css/style.scss';
 
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import App from './containers/App';
+
 import AdvancedApp from './containers/AdvancedApp';
+import App from './containers/App';
 import createStore from './createStore';
-import '../css/style.scss';
 
 const store = createStore();
 

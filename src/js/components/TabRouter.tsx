@@ -1,20 +1,18 @@
-'use strict';
-
-import React from 'react';
-import PropTypes from 'prop-types';
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-const propTypes = {
-  initialTab: PropTypes.string.isRequired,
-};
+interface Props {
+  initialTab: string;
+}
 
-const TabRouter = (props) => {
-  const [value, setValue] = React.useState(props.initialTab);
+const TabRouter: React.FC<Props> = (props) => {
+  const [value, setValue] = React.useState<string>(props.initialTab);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_: any, newValue: string) => {
     setValue(newValue);
   };
 
@@ -39,7 +37,5 @@ const TabRouter = (props) => {
     </Paper>
   );
 };
-
-TabRouter.propTypes = propTypes;
 
 export default TabRouter;

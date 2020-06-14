@@ -1,15 +1,15 @@
-'use strict';
+import { applyMiddleware, createStore as reduxCreateStore } from 'redux';
+import Redux from 'redux';
+import { logger } from 'redux-logger';
 
-import { createStore as reduxCreateStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers/routeReducer';
 
-const middlewares = [];
+const middlewares: Redux.Middleware[] = [];
 if (process.env.NODE_ENV !== 'production') {
-  const { logger } = require('redux-logger');
   middlewares.push(logger);
 }
 
-const createStore = () => {
+const createStore = (): Redux.Store => {
   return reduxCreateStore(rootReducer, applyMiddleware(...middlewares));
 };
 

@@ -1,11 +1,11 @@
-'use strict';
-
-import { bindActionCreators } from 'redux';
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 import { connect } from 'react-redux';
-import App from '../components/App';
-import { actionCreators } from '../actions/action';
+import { bindActionCreators } from 'redux';
 
-const mapStateToProps = (state) => {
+import { actionCreators } from '../actions/action';
+import App from '../components/App';
+
+const mapStateToProps = (state: any) => {
   return {
     originalNumber: state.reducer.originalNumber,
     originalBase: state.reducer.originalBase,
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: any) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 

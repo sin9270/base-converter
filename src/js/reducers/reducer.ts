@@ -1,5 +1,3 @@
-'use strict';
-
 const base10 = '0123456789';
 const base16 = '0123456789abcdef';
 
@@ -11,7 +9,16 @@ const initialState = {
   convertedBaseNumbers: base16,
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (
+  state = initialState,
+  action: { type: string; payload: string }
+): {
+  originalNumber: string;
+  originalBase: string;
+  convertedBase: string;
+  originalBaseNumbers: string;
+  convertedBaseNumbers: string;
+} => {
   switch (action.type) {
     case 'INPUT_ORIGINAL_NUMBER':
       return {

@@ -5,22 +5,40 @@
     "commonjs": true,
     "es6": true
   },
-  "plugins": ["node", "react", "json", "html", "jest", "prettier"],
+  "plugins": [
+    "node",
+    "react",
+    "json",
+    "html",
+    "jest",
+    "prettier",
+    "@typescript-eslint",
+    "simple-import-sort"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
     "plugin:react/recommended",
     "plugin:jest/recommended",
     "plugin:prettier/recommended",
-    "prettier/react"
+    "prettier/react",
+    "plugin:@typescript-eslint/recommended"
   ],
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2020,
     "ecmaFeatures": {
       "jsx": true
     },
     "sourceType": "module"
+  },
+  "settings": {
+    "node": {
+      "tryExtensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+    },
+    "react": {
+      "version": "latest"
+    }
   },
   "rules": {
     "prettier/prettier": [
@@ -38,8 +56,23 @@
     "node/no-unpublished-import": [
       "error",
       {
-        "allowModules": ["enzyme", "enzyme-adapter-react-16", "react-test-renderer", "chai"]
+        "allowModules": [
+          "webpack",
+          "webpack-merge",
+          "enzyme",
+          "enzyme-adapter-react-16",
+          "react-test-renderer"
+        ]
       }
-    ]
-  }
+    ],
+    "simple-import-sort/sort": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ]
 }

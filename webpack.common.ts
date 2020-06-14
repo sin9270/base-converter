@@ -1,7 +1,8 @@
-const path = require('path');
+import * as path from 'path';
+import * as webpack from 'webpack';
 
-module.exports = {
-  entry: './src/js/index.js',
+const config: webpack.Configuration = {
+  entry: './src/js/index.tsx',
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'public/js/'),
@@ -10,19 +11,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                ['@babel/preset-env', { modules: false }],
-                '@babel/preset-react',
-              ],
-            },
-          },
-        ],
+        use: 'ts-loader',
       },
       {
         test: /\.s[ac]ss$/i,
@@ -44,4 +35,9 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    extensions: ['.js', '.ts', '.tsx', '.json'],
+  },
 };
+
+export default config;

@@ -1,22 +1,20 @@
-'use strict';
-
-import React from 'react';
-import PropTypes from 'prop-types';
-import TabRouter from './TabRouter';
-import BootstrapInput from './BootstrapInput';
-import ErrorMessage from './ErrorMessage';
+import * as React from 'react';
 import { convertBase } from 'simple-base-converter';
 
-const propTypes = {
-  originalNumber: PropTypes.string.isRequired,
-  originalBase: PropTypes.string.isRequired,
-  convertedBase: PropTypes.string.isRequired,
-  inputOriginalBase: PropTypes.func.isRequired,
-  inputOriginalNumber: PropTypes.func.isRequired,
-  inputConvertedBase: PropTypes.func.isRequired,
-};
+import BootstrapInput from './BootstrapInput';
+import ErrorMessage from './ErrorMessage';
+import TabRouter from './TabRouter';
 
-const App = (props) => {
+interface Props {
+  originalNumber: string;
+  originalBase: string;
+  convertedBase: string;
+  inputOriginalBase: (originalBase: string) => void;
+  inputOriginalNumber: (originalNumber: string) => void;
+  inputConvertedBase: (convertedBase: string) => void;
+}
+
+const App: React.FC<Props> = (props) => {
   const originalNumber = props.originalNumber;
   const originalBase = parseInt(props.originalBase);
   const convertedBase = parseInt(props.convertedBase);
@@ -85,7 +83,5 @@ const App = (props) => {
     </div>
   );
 };
-
-App.propTypes = propTypes;
 
 export default App;

@@ -1,5 +1,3 @@
-'use strict';
-
 import { actionTypes } from '../src/js/actions/action';
 
 describe('test actions', () => {

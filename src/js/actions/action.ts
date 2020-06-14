@@ -1,5 +1,3 @@
-'use strict';
-
 export const actionTypes = {
   INPUT_ORIGINAL_NUMBER: 'INPUT_ORIGINAL_NUMBER',
   INPUT_ORIGINAL_BASE: 'INPUT_ORIGINAL_BASE',
@@ -9,35 +7,45 @@ export const actionTypes = {
 };
 
 export const actionCreators = {
-  inputOriginalNumber: (originalNumber) => {
+  inputOriginalNumber: (
+    originalNumber: string
+  ): { type: string; payload: string } => {
     return {
       type: actionTypes.INPUT_ORIGINAL_NUMBER,
       payload: originalNumber,
     };
   },
 
-  inputOriginalBase: (originalBase) => {
+  inputOriginalBase: (
+    originalBase: string
+  ): { type: string; payload: string } => {
     return {
       type: actionTypes.INPUT_ORIGINAL_BASE,
       payload: originalBase,
     };
   },
 
-  inputConvertedBase: (convertedBase) => {
+  inputConvertedBase: (
+    convertedBase: string
+  ): { type: string; payload: string } => {
     return {
       type: actionTypes.INPUT_CONVERTED_BASE,
       payload: convertedBase,
     };
   },
 
-  inputOriginalBaseNumbers: (originalBaseNumbers) => {
+  inputOriginalBaseNumbers: (
+    originalBaseNumbers: string
+  ): { type: string; payload: string } => {
     return {
       type: actionTypes.INPUT_ORIGINAL_BASE_NUMBERS,
       payload: originalBaseNumbers,
     };
   },
 
-  inputConvertedBaseNumbers: (convertedBaseNumbers) => {
+  inputConvertedBaseNumbers: (
+    convertedBaseNumbers: string
+  ): { type: string; payload: string } => {
     return {
       type: actionTypes.INPUT_CONVERTED_BASE_NUMBERS,
       payload: convertedBaseNumbers,
