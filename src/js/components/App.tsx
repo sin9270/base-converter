@@ -43,7 +43,6 @@ const App: React.FC<Props> = (props) => {
       <div className="main">
         <div>
           <BootstrapInput
-            id="bootstrap-input"
             defaultValue={props.originalBase}
             onChange={(e) => props.inputOriginalBase(e.target.value)}
           />
@@ -52,7 +51,6 @@ const App: React.FC<Props> = (props) => {
         進数の
         <div>
           <BootstrapInput
-            id="bootstrap-input"
             defaultValue={originalNumber}
             onChange={(e) => props.inputOriginalNumber(e.target.value)}
           />
@@ -65,7 +63,6 @@ const App: React.FC<Props> = (props) => {
         を
         <div>
           <BootstrapInput
-            id="bootstrap-input"
             defaultValue={props.convertedBase}
             onChange={(e) => props.inputConvertedBase(e.target.value)}
           />
@@ -73,7 +70,7 @@ const App: React.FC<Props> = (props) => {
         </div>
         進数に変換すると
         <div>
-          <BootstrapInput id="bootstrap-input" value={convertedNumber} />
+          <BootstrapInput value={convertedNumber} />
         </div>
         です。
       </div>

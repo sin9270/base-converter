@@ -59,7 +59,6 @@ const AdvancedApp: React.FC<Props> = (props) => {
       <div className="main">
         <div>
           <BootstrapInput
-            id="bootstrap-input"
             defaultValue={originalBaseNumbers}
             onChange={(e) => props.inputOriginalBaseNumbers(e.target.value)}
           />
@@ -68,7 +67,6 @@ const AdvancedApp: React.FC<Props> = (props) => {
         の文字を用いた<b>{originalBaseNumbers.length}</b>進数の
         <div>
           <BootstrapInput
-            id="bootstrap-input"
             defaultValue={originalNumber}
             onChange={(e) => props.inputOriginalNumber(e.target.value)}
           />
@@ -81,7 +79,6 @@ const AdvancedApp: React.FC<Props> = (props) => {
         を
         <div>
           <BootstrapInput
-            id="bootstrap-input"
             defaultValue={convertedBaseNumbers}
             onChange={(e) => props.inputConvertedBaseNumbers(e.target.value)}
           />
@@ -89,7 +86,7 @@ const AdvancedApp: React.FC<Props> = (props) => {
         </div>
         の文字を用いた<b>{convertedBaseNumbers.length}</b>進数に変換すると
         <div>
-          <BootstrapInput id="bootstrap-input" value={convertedNumber} />
+          <BootstrapInput value={convertedNumber} />
         </div>
         です。
       </div>
