@@ -3,7 +3,6 @@ import { convertBase } from 'simple-base-converter';
 
 import BootstrapInput from './BootstrapInput';
 import ErrorMessage from './ErrorMessage';
-import TabRouter from './TabRouter';
 
 interface Props {
   originalNumber: string;
@@ -41,8 +40,6 @@ const App: React.FC<Props> = (props) => {
 
   return (
     <div className="app">
-      <h1>進数変換器</h1>
-      <TabRouter initialTab="App" />
       <div className="main">
         <div>
           <BootstrapInput

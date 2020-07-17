@@ -4,7 +4,6 @@ import * as React from 'react';
 import AdvancedApp from '../src/js/components/AdvancedApp';
 import BootstrapInput from '../src/js/components/BootstrapInput';
 import ErrorMessage from '../src/js/components/ErrorMessage';
-import TabRouter from '../src/js/components/TabRouter';
 
 describe('test AdvancedApp', () => {
   const testProps = {
@@ -23,7 +22,6 @@ describe('test AdvancedApp', () => {
   });
 
   it('子コンポーネントが存在するかチェック', () => {
-    expect(wrapper.find(TabRouter).length).toBe(1);
     expect(wrapper.find(BootstrapInput).length).toBe(4);
     expect(wrapper.find(ErrorMessage).length).toBe(3);
   });
