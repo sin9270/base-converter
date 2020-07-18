@@ -4,6 +4,7 @@ export const actionTypes = {
   INPUT_CONVERTED_BASE: 'INPUT_CONVERTED_BASE',
   INPUT_ORIGINAL_BASE_NUMBERS: 'INPUT_ORIGINAL_BASE_NUMBERS',
   INPUT_CONVERTED_BASE_NUMBERS: 'INPUT_CONVERTED_BASE_NUMBERS',
+  CHANGE_LOCALE: 'CHANGE_LOCALE',
 };
 
 export const actionCreators = {
@@ -49,6 +50,13 @@ export const actionCreators = {
     return {
       type: actionTypes.INPUT_CONVERTED_BASE_NUMBERS,
       payload: convertedBaseNumbers,
+    };
+  },
+
+  changeLocale: (locale: string): { type: string; payload: string } => {
+    return {
+      type: actionTypes.CHANGE_LOCALE,
+      payload: locale,
     };
   },
 };

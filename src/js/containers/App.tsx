@@ -1,10 +1,10 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { actionCreators } from '../actions/action';
 import App from '../components/App';
-
 const mapStateToProps = (state: any) => {
   return {
     originalNumber: state.reducer.originalNumber,
@@ -17,4 +17,4 @@ const mapDispatchToProps = (dispatch: any) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(App));

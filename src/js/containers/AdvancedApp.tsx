@@ -1,4 +1,5 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -17,4 +18,6 @@ const mapDispatchToProps = (dispatch: any) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdvancedApp);
+export default injectIntl(
+  connect(mapStateToProps, mapDispatchToProps)(AdvancedApp)
+);

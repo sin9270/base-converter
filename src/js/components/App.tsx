@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 import * as React from 'react';
 import { convertBase } from 'simple-base-converter';
 
@@ -10,6 +11,7 @@ interface Props {
   inputOriginalBase: (originalBase: string) => void;
   inputOriginalNumber: (originalNumber: string) => void;
   inputConvertedBase: (convertedBase: string) => void;
+  intl?: any;
 }
 
 const App: React.FC<Props> = (props) => {
@@ -23,24 +25,31 @@ const App: React.FC<Props> = (props) => {
   let convertedNumber = '';
 
   if (!(2 <= originalBase && originalBase <= 62)) {
-    errMsgForOriginalBase = '2から62の数を入力してください。';
+    errMsgForOriginalBase = props.intl?.formatMessage({
+      id: 'error-message-1',
+    });
   }
   if (!(2 <= convertedBase && convertedBase <= 62)) {
-    errMsgForConvertedBase = '2から62の数を入力してください。';
+    errMsgForConvertedBase = props.intl?.formatMessage({
+      id: 'error-message-1',
+    });
   }
 
   try {
     convertedNumber = convertBase(originalNumber, originalBase, convertedBase);
   } catch (e) {
     if (e.message === 'First augument must consist of second augument.') {
-      errMsgForOriginalNumber = originalBase + '進数の数を入力してください。';
+      errMsgForOriginalNumber = props.intl?.formatMessage(
+        { id: 'error-message-2' },
+        { base: originalBase }
+      );
     }
   }
 
   return (
     <div className="main">
       <div>
-        <div>変換前の基数:</div>
+        <div>{props.intl?.formatMessage({ id: 'from-base' })}:</div>
         <div>
           <BootstrapInput
             defaultValue={props.originalBase}
@@ -48,7 +57,7 @@ const App: React.FC<Props> = (props) => {
           />
           <ErrorMessage message={errMsgForOriginalBase} />
         </div>
-        <div>変換後の基数:</div>
+        <div>{props.intl?.formatMessage({ id: 'to-base' })}:</div>
         <div>
           <BootstrapInput
             defaultValue={props.convertedBase}
@@ -58,7 +67,7 @@ const App: React.FC<Props> = (props) => {
         </div>
       </div>
       <div>
-        <div>変換前の数:</div>
+        <div>{props.intl?.formatMessage({ id: 'from-number' })}:</div>
         <div>
           <BootstrapInput
             defaultValue={originalNumber}
@@ -70,7 +79,7 @@ const App: React.FC<Props> = (props) => {
             ''
           )}
         </div>
-        <div>変換後の数:</div>
+        <div>{props.intl?.formatMessage({ id: 'to-number' })}:</div>
         <div>
           <BootstrapInput value={convertedNumber} />
         </div>

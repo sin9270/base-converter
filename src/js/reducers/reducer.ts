@@ -7,6 +7,7 @@ const initialState = {
   convertedBase: '16',
   originalBaseNumbers: base10,
   convertedBaseNumbers: base16,
+  locale: 'en',
 };
 
 const reducer = (
@@ -18,6 +19,7 @@ const reducer = (
   convertedBase: string;
   originalBaseNumbers: string;
   convertedBaseNumbers: string;
+  locale: string;
 } => {
   switch (action.type) {
     case 'INPUT_ORIGINAL_NUMBER':
@@ -44,6 +46,11 @@ const reducer = (
       return {
         ...state,
         convertedBaseNumbers: action.payload,
+      };
+    case 'CHANGE_LOCALE':
+      return {
+        ...state,
+        locale: action.payload,
       };
     default:
       return state;

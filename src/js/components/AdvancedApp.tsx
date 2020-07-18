@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 import * as React from 'react';
 import { convertBase } from 'simple-base-converter';
 
@@ -11,6 +12,7 @@ interface Props {
   inputOriginalBaseNumbers: (originalBase: string) => void;
   inputOriginalNumber: (originalNumber: string) => void;
   inputConvertedBaseNumbers: (convertedBase: string) => void;
+  intl?: any;
 }
 
 const AdvancedApp: React.FC<Props> = (props) => {
@@ -31,32 +33,41 @@ const AdvancedApp: React.FC<Props> = (props) => {
     );
   } catch (e) {
     if (e.message === 'First augument must consist of second augument.') {
-      errMsgForOriginalNumber =
-        originalBaseNumbers.length + '進数の数を入力してください。';
+      errMsgForOriginalNumber = props.intl?.formatMessage({
+        id: 'error-message-5',
+      });
     } else if (
       e.message === 'Second augument must not contain the same characters.'
     ) {
-      errMsgForOriginalBaseNumbers = '全て異なる文字を入力してください。';
+      errMsgForOriginalBaseNumbers = props.intl?.formatMessage({
+        id: 'error-message-3',
+      });
     } else if (
       e.message ===
       "Second augument' length must be larger than 1. Base 1 or smaller cannnot be defined."
     ) {
-      errMsgForOriginalBaseNumbers = '2文字以上を入力してください。';
+      errMsgForOriginalBaseNumbers = props.intl?.formatMessage({
+        id: 'error-message-4',
+      });
     } else if (
       e.message === 'Third augument must not contain the same characters.'
     ) {
-      errMsgForConvertedBaseNumbers = '全て異なる文字を入力してください。';
+      errMsgForConvertedBaseNumbers = props.intl?.formatMessage({
+        id: 'error-message-3',
+      });
     } else if (
       e.message ===
       "Third augument' length must be larger than 1. Base 1 or smaller cannnot be defined."
     ) {
-      errMsgForConvertedBaseNumbers = '2文字以上を入力してください。';
+      errMsgForConvertedBaseNumbers = props.intl?.formatMessage({
+        id: 'error-message-4',
+      });
     }
   }
 
   return (
     <div className="main">
-      <div>変換前の基数文字列:</div>
+      <div>{props.intl?.formatMessage({ id: 'from-base' })}:</div>
       <div>
         <BootstrapInput
           defaultValue={originalBaseNumbers}
@@ -64,7 +75,7 @@ const AdvancedApp: React.FC<Props> = (props) => {
         />
         <ErrorMessage message={errMsgForOriginalBaseNumbers} />
       </div>
-      <div>変換後の基数文字列:</div>
+      <div>{props.intl?.formatMessage({ id: 'to-base' })}:</div>
       <div>
         <BootstrapInput
           defaultValue={convertedBaseNumbers}
@@ -72,7 +83,7 @@ const AdvancedApp: React.FC<Props> = (props) => {
         />
         <ErrorMessage message={errMsgForConvertedBaseNumbers} />
       </div>
-      <div>変換前の数:</div>
+      <div>{props.intl?.formatMessage({ id: 'from-number' })}:</div>
       <div>
         <BootstrapInput
           defaultValue={originalNumber}
@@ -84,7 +95,7 @@ const AdvancedApp: React.FC<Props> = (props) => {
           ''
         )}
       </div>
-      <div>変換後の数:</div>
+      <div>{props.intl?.formatMessage({ id: 'to-number' })}:</div>
       <div>
         <BootstrapInput value={convertedNumber} />
       </div>

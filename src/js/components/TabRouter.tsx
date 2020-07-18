@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -26,9 +27,14 @@ const TabRouter: React.FC<Props> = (props) => {
         variant="fullWidth"
         onChange={handleChange}
       >
-        <Tab label="簡易版" value="App" to="/" component={Link} />
         <Tab
-          label="カスタム版"
+          label={<FormattedMessage id="simple" />}
+          value="App"
+          to="/"
+          component={Link}
+        />
+        <Tab
+          label={<FormattedMessage id="custom" />}
           value="AdvancedApp"
           to="/advanced"
           component={Link}
