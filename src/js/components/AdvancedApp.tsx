@@ -55,40 +55,38 @@ const AdvancedApp: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="app">
-      <div className="main">
-        <div>
-          <BootstrapInput
-            defaultValue={originalBaseNumbers}
-            onChange={(e) => props.inputOriginalBaseNumbers(e.target.value)}
-          />
-          <ErrorMessage message={errMsgForOriginalBaseNumbers} />
-        </div>
-        の文字を用いた<b>{originalBaseNumbers.length}</b>進数の
-        <div>
-          <BootstrapInput
-            defaultValue={originalNumber}
-            onChange={(e) => props.inputOriginalNumber(e.target.value)}
-          />
-          {originalNumber ? (
-            <ErrorMessage message={errMsgForOriginalNumber} />
-          ) : (
-            ''
-          )}
-        </div>
-        を
-        <div>
-          <BootstrapInput
-            defaultValue={convertedBaseNumbers}
-            onChange={(e) => props.inputConvertedBaseNumbers(e.target.value)}
-          />
-          <ErrorMessage message={errMsgForConvertedBaseNumbers} />
-        </div>
-        の文字を用いた<b>{convertedBaseNumbers.length}</b>進数に変換すると
-        <div>
-          <BootstrapInput value={convertedNumber} />
-        </div>
-        です。
+    <div className="main">
+      <div>変換前の基数文字列:</div>
+      <div>
+        <BootstrapInput
+          defaultValue={originalBaseNumbers}
+          onChange={(e) => props.inputOriginalBaseNumbers(e.target.value)}
+        />
+        <ErrorMessage message={errMsgForOriginalBaseNumbers} />
+      </div>
+      <div>変換後の基数文字列:</div>
+      <div>
+        <BootstrapInput
+          defaultValue={convertedBaseNumbers}
+          onChange={(e) => props.inputConvertedBaseNumbers(e.target.value)}
+        />
+        <ErrorMessage message={errMsgForConvertedBaseNumbers} />
+      </div>
+      <div>変換前の数:</div>
+      <div>
+        <BootstrapInput
+          defaultValue={originalNumber}
+          onChange={(e) => props.inputOriginalNumber(e.target.value)}
+        />
+        {originalNumber ? (
+          <ErrorMessage message={errMsgForOriginalNumber} />
+        ) : (
+          ''
+        )}
+      </div>
+      <div>変換後の数:</div>
+      <div>
+        <BootstrapInput value={convertedNumber} />
       </div>
     </div>
   );

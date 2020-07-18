@@ -3,7 +3,6 @@ import { convertBase } from 'simple-base-converter';
 
 import BootstrapInput from './BootstrapInput';
 import ErrorMessage from './ErrorMessage';
-
 interface Props {
   originalNumber: string;
   originalBase: string;
@@ -39,8 +38,9 @@ const App: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="app">
-      <div className="main">
+    <div className="main">
+      <div>
+        <div>変換前の基数:</div>
         <div>
           <BootstrapInput
             defaultValue={props.originalBase}
@@ -48,7 +48,17 @@ const App: React.FC<Props> = (props) => {
           />
           <ErrorMessage message={errMsgForOriginalBase} />
         </div>
-        進数の
+        <div>変換後の基数:</div>
+        <div>
+          <BootstrapInput
+            defaultValue={props.convertedBase}
+            onChange={(e) => props.inputConvertedBase(e.target.value)}
+          />
+          <ErrorMessage message={errMsgForConvertedBase} />
+        </div>
+      </div>
+      <div>
+        <div>変換前の数:</div>
         <div>
           <BootstrapInput
             defaultValue={originalNumber}
@@ -60,19 +70,10 @@ const App: React.FC<Props> = (props) => {
             ''
           )}
         </div>
-        を
-        <div>
-          <BootstrapInput
-            defaultValue={props.convertedBase}
-            onChange={(e) => props.inputConvertedBase(e.target.value)}
-          />
-          <ErrorMessage message={errMsgForConvertedBase} />
-        </div>
-        進数に変換すると
+        <div>変換後の数:</div>
         <div>
           <BootstrapInput value={convertedNumber} />
         </div>
-        です。
       </div>
     </div>
   );

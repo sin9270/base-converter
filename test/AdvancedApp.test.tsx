@@ -37,12 +37,12 @@ describe('test AdvancedApp', () => {
       .find(BootstrapInput)
       .at(1)
       .simulate('change', { target: { value: '0' } });
-    expect(testProps.inputOriginalNumber).toHaveBeenCalled();
+    expect(testProps.inputConvertedBaseNumbers).toHaveBeenCalled();
 
     wrapper
       .find(BootstrapInput)
       .at(2)
       .simulate('change', { target: { value: '0' } });
-    expect(testProps.inputConvertedBaseNumbers).toHaveBeenCalled();
+    expect(testProps.inputOriginalNumber).toHaveBeenCalled();
   });
 });
