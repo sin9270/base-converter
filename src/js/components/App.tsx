@@ -14,8 +14,8 @@ interface Props {
 
 const App: React.FC<Props> = (props) => {
   const originalNumber = props.originalNumber;
-  const originalBase = parseInt(props.originalBase);
-  const convertedBase = parseInt(props.convertedBase);
+  const originalBase = Number(props.originalBase);
+  const convertedBase = Number(props.convertedBase);
 
   let errMsgForOriginalNumber = '';
   let errMsgForOriginalBase = '';
