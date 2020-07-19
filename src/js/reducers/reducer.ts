@@ -1,3 +1,5 @@
+import { actionTypes } from '../actions/action';
+
 const base10 = '0123456789';
 const base16 = '0123456789abcdef';
 
@@ -22,32 +24,32 @@ const reducer = (
   locale: string;
 } => {
   switch (action.type) {
-    case 'INPUT_ORIGINAL_NUMBER':
+    case actionTypes.INPUT_ORIGINAL_NUMBER:
       return {
         ...state,
         originalNumber: action.payload,
       };
-    case 'INPUT_ORIGINAL_BASE':
+    case actionTypes.INPUT_ORIGINAL_BASE:
       return {
         ...state,
         originalBase: action.payload,
       };
-    case 'INPUT_CONVERTED_BASE':
+    case actionTypes.INPUT_CONVERTED_BASE:
       return {
         ...state,
         convertedBase: action.payload,
       };
-    case 'INPUT_ORIGINAL_BASE_NUMBERS':
+    case actionTypes.INPUT_ORIGINAL_BASE_NUMBERS:
       return {
         ...state,
         originalBaseNumbers: action.payload,
       };
-    case 'INPUT_CONVERTED_BASE_NUMBERS':
+    case actionTypes.INPUT_CONVERTED_BASE_NUMBERS:
       return {
         ...state,
         convertedBaseNumbers: action.payload,
       };
-    case 'CHANGE_LOCALE':
+    case actionTypes.CHANGE_LOCALE:
       return {
         ...state,
         locale: action.payload,
