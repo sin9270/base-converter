@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { actionCreators } from '../actions/action';
+
 interface Props {
   currentLocale: string;
   changeLocale: (nextLocale: string) => void;

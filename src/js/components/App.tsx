@@ -4,6 +4,7 @@ import { convertBase } from 'simple-base-converter';
 
 import BootstrapInput from './BootstrapInput';
 import ErrorMessage from './ErrorMessage';
+
 interface Props {
   originalNumber: string;
   originalBase: string;

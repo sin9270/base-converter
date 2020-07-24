@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { actionCreators } from '../actions/action';
 import App from '../components/App';
+
 const mapStateToProps = (state: any) => {
   return {
     originalNumber: state.reducer.originalNumber,
