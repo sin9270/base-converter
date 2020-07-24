@@ -30,13 +30,13 @@ const TabRouter: React.FC<Props> = (props) => {
         <Tab
           label={<FormattedMessage id="simple" />}
           value="App"
-          to="/"
+          to="/simple"
           component={Link}
         />
         <Tab
           label={<FormattedMessage id="custom" />}
           value="AdvancedApp"
-          to="/advanced"
+          to="/custom"
           component={Link}
         />
       </Tabs>

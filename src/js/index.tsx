@@ -3,7 +3,12 @@ import '../css/style.scss';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 
 import Header from './components/Header';
 import AdvancedApp from './containers/AdvancedApp';
@@ -19,8 +24,9 @@ ReactDOM.render(
       <LocaleProvider>
         <Header />
         <Switch>
-          <Route exact path="/advanced" component={AdvancedApp} />
-          <Route path="/" component={App} />
+          <Route exact path="/simple" component={App} />
+          <Route exact path="/custom" component={AdvancedApp} />
+          <Route path="/" render={() => <Redirect to="/simple" />} />
         </Switch>
       </LocaleProvider>
     </Router>
