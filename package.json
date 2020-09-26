@@ -7,17 +7,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:prod": "npx webpack --config webpack.prod.ts",
-    "build:dev": "npx webpack --config webpack.dev.ts",
-    "start": "npx webpack-dev-server --config webpack.dev.ts",
-    "test": "npx jest --coverage",
+    "build:prod": "webpack --config webpack.prod.ts",
+    "build:dev": "webpack --config webpack.dev.ts",
+    "start": "webpack-dev-server --config webpack.dev.ts",
+    "test": "jest --coverage",
     "lint": "eslint '**/*.ts' '**/*.tsx' '**/*.json' '**/*.html'",
     "fix": "eslint --fix '**/*.ts' '**/*.tsx' '**/*.json' '**/*.html'"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm test"
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test"
     }
   },
   "author": "WATANABE Shin",
