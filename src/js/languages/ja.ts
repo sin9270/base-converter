@@ -1,4 +1,4 @@
-const ja = {
+const ja: { [key: string]: string } = {
   title: '進数変換ツール',
   nextLanguage: 'English',
   simple: 'シンプル版',

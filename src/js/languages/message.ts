@@ -1,8 +1,7 @@
-/* eslint @typescript-eslint/no-explicit-any: 0 */
 import en from './en';
 import ja from './ja';
 
-const message: any = {
+const message = {
   en: en,
   ja: ja,
 };

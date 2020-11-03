@@ -1,4 +1,4 @@
-const en = {
+const en: { [key: string]: string } = {
   title: 'Base Converter',
   nextLanguage: '日本語',
   simple: 'Simple',
