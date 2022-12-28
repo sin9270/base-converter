@@ -5,9 +5,14 @@ import { connect } from 'react-redux';
 
 import message from '../languages/message';
 
-const LocaleProvider: React.FC = (props: any) => {
+interface Props {
+  locale: string;
+  children: React.ReactNode;
+}
+
+const LocaleProvider: React.FC<Props> = (props) => {
   return (
-    <IntlProvider locale={props.locale} messages={message[props.locale]}>
+    <IntlProvider locale={props.locale} messages={message[props.locale as keyof typeof message]}>
       {props.children}
     </IntlProvider>
   );

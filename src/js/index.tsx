@@ -5,9 +5,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import {
   BrowserRouter as Router,
-  Redirect,
+  Navigate,
   Route,
-  Switch,
+  Routes,
 } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -23,11 +23,12 @@ ReactDOM.render(
     <Router>
       <LocaleProvider>
         <Header />
-        <Switch>
-          <Route exact path="/simple" component={App} />
-          <Route exact path="/custom" component={AdvancedApp} />
-          <Route path="/" render={() => <Redirect to="/simple" />} />
-        </Switch>
+        <Routes>
+          <Route path="/simple" element={<App />} />
+          <Route path="/custom" element={<AdvancedApp />} />
+          <Route path="/" element={<Navigate to="/simple" />} />
+          {/* <Route path="/" render={() => <Navigate to="/simple" />} /> */}
+        </Routes>
       </LocaleProvider>
     </Router>
   </Provider>,

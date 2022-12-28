@@ -1,7 +1,6 @@
-/* eslint @typescript-eslint/no-explicit-any: 0 */
-import Paper from '@material-ui/core/Paper';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
+import Paper from '@mui/material/Paper';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -13,7 +12,7 @@ interface Props {
 const TabRouter: React.FC<Props> = (props) => {
   const [value, setValue] = React.useState<string>(props.initialTab);
 
-  const handleChange = (_: any, newValue: string) => {
+  const handleChange = (_: React.SyntheticEvent<Element, Event>, newValue: string) => {
     setValue(newValue);
   };
 

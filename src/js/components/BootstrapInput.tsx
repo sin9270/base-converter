@@ -1,7 +1,7 @@
-import InputBase from '@material-ui/core/InputBase';
-import { fade, withStyles } from '@material-ui/core/styles';
+import InputBase from '@mui/material/InputBase';
+import { alpha, styled } from '@mui/material/styles';
 
-const BootstrapInput = withStyles((theme) => ({
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
   root: {
     'label + &': {
       marginTop: theme.spacing(3),
@@ -29,10 +29,10 @@ const BootstrapInput = withStyles((theme) => ({
       '"Segoe UI Symbol"',
     ].join(','),
     '&:focus': {
-      boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
       borderColor: theme.palette.primary.main,
     },
   },
-}))(InputBase);
+}));
 
 export default BootstrapInput;

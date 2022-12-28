@@ -1,9 +1,9 @@
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
-import * as webpack from 'webpack';
+import { Configuration } from 'webpack';
 
-const config: webpack.Configuration = {
+const config: Configuration = {
   entry: './src/js/index.tsx',
   plugins: [
     new CleanWebpackPlugin({

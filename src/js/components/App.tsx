@@ -39,11 +39,13 @@ const App: React.FC<Props> = (props) => {
   try {
     convertedNumber = convertBase(originalNumber, originalBase, convertedBase);
   } catch (e) {
-    if (e.message === 'First augument must consist of second augument.') {
-      errMsgForOriginalNumber = props.intl?.formatMessage(
-        { id: 'error-message-2' },
-        { base: originalBase }
-      );
+    if (e instanceof Error) {
+      if (e.message === 'First augument must consist of second augument.') {
+        errMsgForOriginalNumber = props.intl?.formatMessage(
+          { id: 'error-message-2' },
+          { base: originalBase }
+        );
+      }
     }
   }
 
@@ -54,7 +56,7 @@ const App: React.FC<Props> = (props) => {
         <div>
           <BootstrapInput
             defaultValue={props.originalBase}
-            onChange={(e) => props.inputOriginalBase(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.inputOriginalBase(e.target.value)}
           />
           <ErrorMessage message={errMsgForOriginalBase} />
         </div>
@@ -62,7 +64,7 @@ const App: React.FC<Props> = (props) => {
         <div>
           <BootstrapInput
             defaultValue={props.convertedBase}
-            onChange={(e) => props.inputConvertedBase(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.inputConvertedBase(e.target.value)}
           />
           <ErrorMessage message={errMsgForConvertedBase} />
         </div>
@@ -72,7 +74,7 @@ const App: React.FC<Props> = (props) => {
         <div>
           <BootstrapInput
             defaultValue={originalNumber}
-            onChange={(e) => props.inputOriginalNumber(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.inputOriginalNumber(e.target.value)}
           />
           {originalNumber ? (
             <ErrorMessage message={errMsgForOriginalNumber} />
