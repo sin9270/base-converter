@@ -1,5 +1,5 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import Link from '@material-ui/core/Link';
+import Link from '@mui/material/Link';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';

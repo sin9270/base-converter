@@ -11,17 +11,15 @@
     "json",
     "html",
     "jest",
-    "prettier",
     "@typescript-eslint",
-    "simple-import-sort"
+    "import"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
     "plugin:react/recommended",
     "plugin:jest/recommended",
-    "plugin:prettier/recommended",
-    "prettier/react",
+    "prettier",
     "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -37,16 +35,10 @@
       "tryExtensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
     },
     "react": {
-      "version": "latest"
+      "version": "detect"
     }
   },
   "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true
-      }
-    ],
     "node/no-unsupported-features/es-syntax": [
       "error",
       {
@@ -58,6 +50,7 @@
       {
         "allowModules": [
           "webpack",
+          "webpack-dev-server",
           "webpack-merge",
           "enzyme",
           "enzyme-adapter-react-16",
@@ -66,8 +59,7 @@
           "html-webpack-plugin"
         ]
       }
-    ],
-    "simple-import-sort/sort": "error"
+    ]
   },
   "overrides": [
     {
